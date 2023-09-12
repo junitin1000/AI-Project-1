@@ -3,6 +3,8 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        //Main basically just starts the game and makes it n x n, then passes it off to Game
+        //TODO switch off between player and ai, also make ai lmao oops
         boolean startGame = false;
         System.out.println("Hello! Would you like to play a game of Dots and Boxes?!");
         Scanner scan = new Scanner(System.in);

@@ -1,14 +1,6 @@
 public class Game {
-    /*enum State {
-        Empty,
-        User,
-        Opponent
-    }
-    public void startGame() {
-        System.out.println("\n\n\nDOING GAME STUFF\n\n\n");
-        State[][] board = new State[5][5];
+    //Game Creates a board and prints it. Doesn't do much else rn
 
-    }*/
 
     private int rows;
     private int cols;

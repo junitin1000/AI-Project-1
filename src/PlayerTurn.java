@@ -1,6 +1,9 @@
 import java.util.Scanner;
 
 public class PlayerTurn {
+
+    //TODO NEED TO GO OVER HOW WE WANT TO HANDLE PARSING INFO GIVEN TO SELECT A LINE ON THE BOARD
+
     Scanner scan = new Scanner(System.in);
     int row;
     int col;
