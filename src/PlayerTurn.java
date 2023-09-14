@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,9 +9,9 @@ public class PlayerTurn {
     //TODO NEED TO GO OVER HOW WE WANT TO HANDLE PARSING INFO GIVEN TO SELECT A LINE ON THE BOARD
 
     Scanner scan = new Scanner(System.in);
-    int row;
-    int col;
     int boardSize;
+    HashMap<int[], Character> linesDrawn = new HashMap<>();
+
     public PlayerTurn(){
         System.out.println("Your Turn!");
         takeTurn();
@@ -18,8 +20,7 @@ public class PlayerTurn {
     private void takeTurn(){
         //Get response from Player ("row,col")
         if(isValidResponse(scan.nextLine())) {
-            //row = getNum(/*substring row*/"1");
-            //col = getNum(/*substring col*/"1");
+
         }
         else{
             //invalid, do it again
@@ -73,7 +74,14 @@ public class PlayerTurn {
             }
 
             if (inRange){
-                return true;
+                int distanceBetweenRows = Math.abs(r1-r2);
+                int distanceBetweenCols = Math.abs(c1-c2);
+                if (((distanceBetweenRows == 1) && (distanceBetweenCols == 0)) || //Checks to see if rows or columns but not both are next to each other
+                        ((distanceBetweenCols == 1) && (distanceBetweenRows == 0))){
+                    //If the current line has not already been drawn
+                    return true;
+                }
+
             }
         }
         return false;

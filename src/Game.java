@@ -1,6 +1,8 @@
 public class Game {
     //Game Creates a board and prints it. Doesn't do much else rn
 
+    //My thoughts: Store moves that have already happened in a hashmap<int[2],String> where the int[] is the line that was
+    //drawn (ie "((0,0),(0,1))") and the String is either 'player' or 'ai', meaning it was drawn by the player or the ai
 
     private int rows;
     private int cols;
