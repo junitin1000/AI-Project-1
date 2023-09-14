@@ -9,6 +9,7 @@ public class PlayerTurn {
     Scanner scan = new Scanner(System.in);
     int row;
     int col;
+    int boardSize;
     public PlayerTurn(){
         System.out.println("Your Turn!");
         takeTurn();
@@ -17,28 +18,34 @@ public class PlayerTurn {
     private void takeTurn(){
         //Get response from Player ("row,col")
         if(isValidResponse(scan.nextLine())) {
-            row = getRow(/*substring row*/"1");
-            col = getCol(/*substring col*/"1");
+            //row = getNum(/*substring row*/"1");
+            //col = getNum(/*substring col*/"1");
         }
         else{
             //invalid, do it again
         }
     }
 
-    private int getRow(String row){
-        return Integer.parseInt(row);
+    private int[] getNums(String num){
+        Pattern numberPattern = Pattern.compile("-?\\d+");
+        Matcher matcher = numberPattern.matcher(num);
+        int[] numbers = new int[4];
+        int index = 0;
+
+        while (matcher.find() && index < 4) {
+            numbers[index++] = Integer.parseInt(matcher.group());
+        }
+
+        return numbers;
     }
 
-    private int getCol(String col){
-        return Integer.parseInt(col);
-    }
 
     /**
      * isValidResponse should return true if the string taken from the command line is a valid move and false otherwise.
-     * A response is valid if the input is in this format: "((X1,Y1),(X2,Y2))" where X and Y are positions on the board
-     * All values must be less the size of the game (X1,X2,Y1,Y2 cannot be 3 in a 3x3 game)
-     * The line must not have already been drawn in the game (ie ((X1,Y1),(X2,Y2)) must not have already been played)
-     * and the move must create a straight line (ie |X1-X2| = 1 XOR |Y1-Y2| = 1)
+     * A response is valid if the input is in this format: "((R1,C1),(R2,C2))" where R and C are positions on the board
+     * All values must be less the size of the game (R1,R2,C1,C2 cannot be 3 in a 3x3 game)
+     * The line must not have already been drawn in the game (ie ((R1,C1),(R2,C2)) must not have already been played)
+     * and the move must create a straight line (ie |R1-R2| = 1 XOR |C1-C2| = 1)
      *
      * @param response - a user input from the command line
      * @return true if the above conditions are satisfied, false otherwise
@@ -49,8 +56,25 @@ public class PlayerTurn {
         Pattern regex = Pattern.compile(pattern);
         Matcher matcher = regex.matcher(workingResp);
         if (matcher.matches()){
-            //We're in boys
-            return true;
+            int[] numbers = getNums(workingResp);
+            int r1 = numbers[0];
+            int c1 = numbers[1];
+            int r2 = numbers[2];
+            int c2 = numbers[3];
+
+            boolean inRange = false;
+
+            for (int eachNumber : numbers){
+                if (eachNumber > boardSize){
+                    inRange = false;
+                    break;
+                }
+                inRange = true;
+            }
+
+            if (inRange){
+                return true;
+            }
         }
         return false;
     }
