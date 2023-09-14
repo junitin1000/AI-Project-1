@@ -9,8 +9,11 @@ public class PlayerTurn {
     //TODO NEED TO GO OVER HOW WE WANT TO HANDLE PARSING INFO GIVEN TO SELECT A LINE ON THE BOARD
 
     Scanner scan = new Scanner(System.in);
+    int[] point1;
+    int[] point2;
+
     int boardSize;
-    HashMap<int[], Character> linesDrawn = new HashMap<>();
+    HashMap<int[][], String> gameBoard = new HashMap<>();
 
     public PlayerTurn(){
         System.out.println("Your Turn!");
@@ -18,9 +21,10 @@ public class PlayerTurn {
     }
 
     private void takeTurn(){
-        //Get response from Player ("row,col")
+        //Get response from Player "((r1,c1),(r2,c2))"
         if(isValidResponse(scan.nextLine())) {
-
+            int[][] line = {point1, point2};
+            gameBoard.put(line, "Player");
         }
         else{
             //invalid, do it again
@@ -79,7 +83,11 @@ public class PlayerTurn {
                 if (((distanceBetweenRows == 1) && (distanceBetweenCols == 0)) || //Checks to see if rows or columns but not both are next to each other
                         ((distanceBetweenCols == 1) && (distanceBetweenRows == 0))){
                     //If the current line has not already been drawn
-                    return true;
+                    point1 = new int[]{r1, c1};
+                    point2 = new int[]{r2, c2};
+                    if (gameBoard.containsKey(new int[][]{point1, point2})){
+                        return true;
+                    }
                 }
 
             }
