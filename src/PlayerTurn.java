@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PlayerTurn {
 
@@ -42,6 +44,14 @@ public class PlayerTurn {
      * @return true if the above conditions are satisfied, false otherwise
      */
     private boolean isValidResponse(String response){
-        return true;
+        String workingResp = response.replaceAll("\\s", ""); //A trimmed version of response getting rid of all white space
+        String pattern = "\\(\\(-?\\d+,\\d+\\),\\(-?\\d+,\\d+\\)\\)"; //The pattern '((X1,Y1),(X2,Y2))'
+        Pattern regex = Pattern.compile(pattern);
+        Matcher matcher = regex.matcher(workingResp);
+        if (matcher.matches()){
+            //We're in boys
+            return true;
+        }
+        return false;
     }
 }

@@ -32,6 +32,7 @@ public class Main {
             System.out.println("Slay, let's start!");
             Game game = new Game(n,n);
             game.printBoard();
+            PlayerTurn yourTurn = new PlayerTurn();
 
         }
 
