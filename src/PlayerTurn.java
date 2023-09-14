@@ -31,6 +31,16 @@ public class PlayerTurn {
         return Integer.parseInt(col);
     }
 
+    /**
+     * isValidResponse should return true if the string taken from the command line is a valid move and false otherwise.
+     * A response is valid if the input is in this format: "((X1,Y1),(X2,Y2))" where X and Y are positions on the board
+     * All values must be less the size of the game (X1,X2,Y1,Y2 cannot be 3 in a 3x3 game)
+     * The line must not have already been drawn in the game (ie ((X1,Y1),(X2,Y2)) must not have already been played)
+     * and the move must create a straight line (ie |X1-X2| = 1 XOR |Y1-Y2| = 1)
+     *
+     * @param response - a user input from the command line
+     * @return true if the above conditions are satisfied, false otherwise
+     */
     private boolean isValidResponse(String response){
         return true;
     }
