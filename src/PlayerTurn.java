@@ -30,6 +30,7 @@ public class PlayerTurn {
         }
         else{
             //invalid, do it again
+            System.out.println("Fuck!");
         }
     }
 
@@ -87,7 +88,7 @@ public class PlayerTurn {
                     //If the current line has not already been drawn
                     point1 = new int[]{r1, c1};
                     point2 = new int[]{r2, c2};
-                    if (gameBoard.containsKey(new int[][]{point1, point2})){
+                    if (!gameBoard.containsKey(new int[][]{point1, point2})){
                         return true;
                     }
                 }
