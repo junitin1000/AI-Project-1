@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
@@ -32,7 +33,16 @@ public class Main {
             System.out.println("Slay, let's start!");
             Game game = new Game(n,n);
             game.printBoard();
-            PlayerTurn yourTurn = new PlayerTurn();
+            HashMap<int[][], Integer> lineList = new HashMap<>();
+            while(true/*win*/) {
+                PlayerTurn player1Turn = new PlayerTurn(lineList, n, 1);
+                //If win, end
+                if (false/*win*/)
+                    break;
+
+                PlayerTurn player2Turn = new PlayerTurn(lineList, n, 2);
+                //If win, end
+            }
 
         }
 

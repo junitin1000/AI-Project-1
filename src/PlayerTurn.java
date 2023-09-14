@@ -13,18 +13,20 @@ public class PlayerTurn {
     int[] point2;
 
     int boardSize;
-    HashMap<int[][], String> gameBoard = new HashMap<>();
+    HashMap<int[][], Integer> gameBoard = new HashMap<>();
 
-    public PlayerTurn(){
-        System.out.println("Your Turn!");
-        takeTurn();
+    public PlayerTurn(HashMap<int[][], Integer> currentBoard, int sizeOfCurrentBoard, int whichPlayer){
+        boardSize = sizeOfCurrentBoard;
+        gameBoard = currentBoard;
+        System.out.println("Player " + whichPlayer + "'s Turn!");
+        takeTurn(whichPlayer);
     }
 
-    private void takeTurn(){
+    private void takeTurn(Integer whichPlayer){
         //Get response from Player "((r1,c1),(r2,c2))"
         if(isValidResponse(scan.nextLine())) {
             int[][] line = {point1, point2};
-            gameBoard.put(line, "Player");
+            gameBoard.put(line, whichPlayer);
         }
         else{
             //invalid, do it again
