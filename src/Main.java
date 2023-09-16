@@ -36,12 +36,12 @@ public class Main {
         //HashMap<int[][], Integer> lineList = new HashMap<>();
         Board gameBoard = new Board();
         while (true/*win*/) {
-            PlayerTurn player1Turn = new PlayerTurn(gameBoard, 9, 1);
+            AITurn steveTurn = new AITurn(gameBoard, 9, 1);
             //If win, end
             if (false/*win*/)
                 break;
 
-            PlayerTurn player2Turn = new PlayerTurn(gameBoard, 9, 2);
+            PlayerTurn playerTurn = new PlayerTurn(gameBoard, 9, 2);
             //If win, end
         }
 

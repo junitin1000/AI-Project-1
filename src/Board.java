@@ -22,6 +22,10 @@ public class Board {
         initializeEdges();
     }
 
+    public Board(Box[][] boxes){
+        this.gameBoard = boxes;
+    }
+
     public void initializeEdges(){
         edges = new ArrayList<Edge>();
         for(int i=0; i<=9; i++){
@@ -67,6 +71,21 @@ public class Board {
         }
         System.out.println(Arrays.deepToString(newBoard.gameBoard));
         return newBoard;
+    }
+
+    public Board deepCopy(){
+        // Implement a deep copy method for the Board.
+        int numRows = gameBoard.length;
+        int numCols = gameBoard[0].length;
+        Box[][] newBoard = new Box[numRows][numCols];
+
+        // Clone each Box object and populate the newBoxes array.
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
+                newBoard[i][j] = gameBoard[i][j].clone();
+            }
+        }
+        return new Board(newBoard);
     }
 
 }

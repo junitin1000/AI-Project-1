@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PlayerTurn {
+public class PlayerTurn extends Turn{
 
     //TODO NEED TO GO OVER HOW WE WANT TO HANDLE PARSING INFO GIVEN TO SELECT A LINE ON THE BOARD
 
@@ -30,33 +30,15 @@ public class PlayerTurn {
         takeTurn(whichPlayer);
     }
 
-    private void takeTurn(Integer whichPlayer){
+    private void takeTurn(Integer whichPlayer) {
         //Get response from Player "((r1,c1),(r2,c2))"
-        if(isValidResponse(scan.nextLine())) {
-            int distanceBetweenRows = Math.abs(r1-r2);
-            int distanceBetweenCols = Math.abs(c1-c2);
-            if (((distanceBetweenRows == 1) && (distanceBetweenCols == 0))){
-                //Vertical Line
-                Box leftBox = gameBoard.getBox(Math.min(r1,r2),c1-1);
-                Box rightBox = gameBoard.getBox(Math.min(r1,r2),c1);
-
-                leftBox.right = true;
-                rightBox.left = true;
-
-            } //Checks to see if rows or columns but not both are next to each other
-            if(((distanceBetweenCols == 1) && (distanceBetweenRows == 0))) {
-                //Horizontal Line
-                Box aboveBox = gameBoard.getBox(r1 - 1, Math.min(c1, c2));
-                Box belowBox = gameBoard.getBox(r1, Math.min(c1, c2));
-
-                aboveBox.bottom = true;
-                belowBox.top = true;
+        if (isValidResponse(scan.nextLine())) {
+            AITurn.updateBoard(r1, c1, r2, c2, gameBoard);
+        }
+        else {
+                //invalid, do it again
+                System.out.println("Fuck!");
             }
-        }
-        else{
-            //invalid, do it again
-            System.out.println("Fuck!");
-        }
     }
 
     private int[] getNums(String num){
@@ -94,14 +76,13 @@ public class PlayerTurn {
         r2 = numbers[2];
         c2 = numbers[3];
 
-            boolean inRange = false;
+            boolean inRange = true;
 
             for (int eachNumber : numbers){
-                if (eachNumber > boardSize){
+                if (eachNumber > boardSize || eachNumber < 0){
                     inRange = false;
                     break;
                 }
-                inRange = true;
             }
 
             if (inRange){

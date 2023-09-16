@@ -7,13 +7,46 @@ public class Minimax {
     public String bestMove(Board currentBoard) {
 
         ArrayList<Edge> moves = currentBoard.edges;
-        return minimaxDecision(moves, currentBoard, true, -81, 81, 5);
+        Edge decision = minimaxDecision(moves, currentBoard, true,2).getEdge();
+        return "steve " + decision.row1 + "," + decision.col1 + " " + decision.row2 + "," + decision.col2;
+}
 
-//        String bestMove = "";
-//        return bestMove;
+    public BestEdge minimaxDecision(ArrayList<Edge> moves, Board board, Boolean isMaximizing, int depth){
+        Edge bestEdgeSoFar = null;
+        if (depth == 0){
+            return new BestEdge(bestEdgeSoFar, board.getScore());
+        }
+
+        if (isMaximizing){
+            int max = -81;
+            for (Edge move : moves){
+                @SuppressWarnings("unchecked") ArrayList<Edge> otherMoves = (ArrayList<Edge>) moves.clone();
+                otherMoves.remove(move);
+                int potentialMax = minimaxDecision(otherMoves, makeMove(move.row1, move.col1, move.row2, move.col2, board), false, depth-1).getValue();
+                if (potentialMax > max){
+                    max = potentialMax;
+                    bestEdgeSoFar = move;
+
+                }
+            }
+            return new BestEdge(bestEdgeSoFar, max);
+        }
+        else{
+            int min = 81;
+            for (Edge move : moves){
+                @SuppressWarnings("unchecked") ArrayList<Edge> otherMoves = (ArrayList<Edge>) moves.clone();
+                otherMoves.remove(move);
+                int potentialMin = minimaxDecision(otherMoves, makeMove(move.row1, move.col1, move.row2, move.col2, board), true, depth-1).getValue();
+                if (potentialMin < min){
+                    min = potentialMin;
+                    bestEdgeSoFar = move;
+                }
+            }
+            return new BestEdge(bestEdgeSoFar, min);
+        }
     }
-
-    public int minimaxDecision(ArrayList<Edge> moves, Board board, Boolean isMaximizing, int max, int min, int depth){
+    /*
+    public int minimaxDecision2(ArrayList<Edge> moves, Board board, Boolean isMaximizing, int max, int min, int depth){
 
         if (depth == 0){
             if (isMaximizing){
@@ -37,7 +70,7 @@ public class Minimax {
                     max = newBoard.getScore();
                 moves.remove(move);
                 ;
-                if(min <= max) {
+                if(min <= max) { //TODO
                     break;
                 }
             }
@@ -52,7 +85,7 @@ public class Minimax {
             }
         }
         return "";
-    }
+    }*/
 
 
     /**
@@ -60,26 +93,9 @@ public class Minimax {
      * @return A copy of the board with the potential move made
      */
     private Board makeMove(int r1, int c1, int r2, int c2, Board currentBoard){
-        Board potentialBoard = currentBoard.coolClone();
-        int distanceBetweenRows = Math.abs(r1-r2);
-        int distanceBetweenCols = Math.abs(c1-c2);
-        if (((distanceBetweenRows == 1) && (distanceBetweenCols == 0))){
-            //Vertical Line
-            Box leftBox = potentialBoard.getBox(Math.min(r1,r2),c1-1);
-            Box rightBox = potentialBoard.getBox(Math.min(r1,r2),c1);
+        Board potentialBoard = currentBoard.deepCopy();
 
-            leftBox.right = true;
-            rightBox.left = true;
-
-        } //Checks to see if rows or columns but not both are next to each other
-        if(((distanceBetweenCols == 1) && (distanceBetweenRows == 0))) {
-            //Horizontal Line
-            Box aboveBox = potentialBoard.getBox(r1 - 1, Math.min(c1, c2));
-            Box belowBox = potentialBoard.getBox(r1, Math.min(c1, c2));
-
-            aboveBox.bottom = true;
-            belowBox.top = true;
-        }
+        AITurn.updateBoard(r1, c1, r2, c2, potentialBoard);
 
         return potentialBoard;
     }

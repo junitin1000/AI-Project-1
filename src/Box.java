@@ -1,4 +1,4 @@
-public class Box {
+public class Box implements Cloneable{
 
     boolean top;
     boolean bottom;
@@ -12,6 +12,17 @@ public class Box {
         left = false;
         right = false;
         takenBy = "";
+    }
+
+    // Override the clone method to create a deep copy of a Box.
+    @Override
+    public Box clone() {
+        try {
+            return (Box) super.clone();
+        } catch (CloneNotSupportedException e) {
+            // Handle the exception as needed.
+            return null;
+        }
     }
 
 
