@@ -13,6 +13,8 @@ public class Edge {
         this.col2 = col2;
     }
 
+
+
     private void printEdge() {
         System.out.println("New Edge: (" + row1 + ", " + col1 + ") (" + row2 + ", " + col2 + ")");
     }

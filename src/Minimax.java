@@ -31,7 +31,6 @@ public class Minimax {
                 if (potentialMax > max){
                     max = potentialMax;
                     bestEdgeSoFar = move;
-
                 }
                 if(min <= max) {
                     break;
