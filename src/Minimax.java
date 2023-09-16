@@ -12,8 +12,8 @@ public class Minimax {
     public Edge bestMove(Board currentBoard) {
 
         ArrayList<Edge> moves = currentBoard.edges;
-        Edge decision = minimaxDecision(moves, currentBoard, true,2).getEdge();
-        return "steve " + decision.row1 + "," + decision.col1 + " " + decision.row2 + "," + decision.col2;
+        Edge decision = minimaxDecision(moves, currentBoard, true,4).getEdge();
+        return decision;
 }
 
     public BestEdge minimaxDecision(ArrayList<Edge> moves, Board board, Boolean isMaximizing, int depth){
