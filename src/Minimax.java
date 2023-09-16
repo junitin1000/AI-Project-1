@@ -7,21 +7,48 @@ public class Minimax {
     public String bestMove(Board currentBoard) {
 
         ArrayList<Edge> moves = currentBoard.edges;
-        return minimaxDecision(moves, currentBoard, true);
+        return minimaxDecision(moves, currentBoard, true, -81, 81, 5);
 
 //        String bestMove = "";
-//
 //        return bestMove;
     }
 
-    public String minimaxDecision(ArrayList<Edge> moves, Board board, Boolean isMaximizing){
+    public int minimaxDecision(ArrayList<Edge> moves, Board board, Boolean isMaximizing, int max, int min, int depth){
 
+        if (depth == 0){
+            if (isMaximizing){
+                if (board.getScore() > max)
+                    max = board.getScore();
+                return max;
+            }
+            if (board.getScore() < min)
+                min = board.getScore();
+            return min;
+
+        }
         // if steve (player1)
         if(isMaximizing){
             for (Edge move : moves) {
-               // String moveString = "steve " + move.row1 + "," + move.col1 + " " + move.row2 + "," + move.col2;
                 Board newBoard = makeMove(move.row1, move.col1, move.row2, move.col2, board);
-                newBoard.getScore();
+
+                int score = minimaxDecision(moves, newBoard, !isMaximizing, max, min, depth-1);
+
+                if (newBoard.getScore() > max)
+                    max = newBoard.getScore();
+                moves.remove(move);
+                ;
+                if(min <= max) {
+                    break;
+                }
+            }
+        }
+
+        // minimizing player
+        if(!isMaximizing){
+            for (Edge move : moves) {
+                Board newBoard = makeMove(move.row1, move.col1, move.row2, move.col2, board);
+                if (newBoard.getScore() < min)
+                    min = newBoard.getScore();
             }
         }
         return "";
