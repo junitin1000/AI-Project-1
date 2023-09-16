@@ -30,11 +30,11 @@ public class Minimax {
 
 
     /**
-     *
+     * makeMove clones the original board, then makes the move specified by r1, c1, r2, c2 on that cloned board
      * @return A copy of the board with the potential move made
      */
     private Board makeMove(int r1, int c1, int r2, int c2, Board currentBoard){
-        Board potentialBoard = currentBoard;
+        Board potentialBoard = currentBoard.coolClone();
         int distanceBetweenRows = Math.abs(r1-r2);
         int distanceBetweenCols = Math.abs(c1-c2);
         if (((distanceBetweenRows == 1) && (distanceBetweenCols == 0))){
