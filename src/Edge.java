@@ -11,12 +11,9 @@ public class Edge {
         this.col1 = col1;
         this.row2 = row2;
         this.col2 = col2;
-
-        // print the edge to the console
-        printEdge();
     }
 
-    public void printEdge() {
+    private void printEdge() {
         System.out.println("New Edge: (" + row1 + ", " + col1 + ") (" + row2 + ", " + col2 + ")");
     }
 }

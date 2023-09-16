@@ -3,7 +3,12 @@ import java.util.ArrayList;
 public class Minimax {
 
 
-
+    /**
+     * Returns the best move given a certain board state
+     * ASSUMES: depth tree of length=5, maximizing player is playing
+     * @param currentBoard is the games currentBoard state
+     * @return playername row1,col1 row2,col2 best move to play
+     */
     public String bestMove(Board currentBoard) {
 
         ArrayList<Edge> moves = currentBoard.edges;
