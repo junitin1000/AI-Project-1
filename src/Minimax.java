@@ -23,7 +23,6 @@ public class Minimax {
                 Board newBoard = makeMove(move.row1, move.col1, move.row2, move.col2, board);
                 newBoard.getScore();
             }
-
         }
         return "";
     }

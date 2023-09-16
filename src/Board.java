@@ -56,4 +56,17 @@ public class Board {
         return gameBoard[row][col];
     }
 
+    public Board coolClone() {
+        Board newBoard = new Board();
+        int rows = this.gameBoard.length;
+        int cols = this.gameBoard[0].length;
+        newBoard.gameBoard = new Box[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            System.arraycopy(gameBoard[i], 0, newBoard.gameBoard[i], 0, cols);
+        }
+        System.out.println(Arrays.deepToString(newBoard.gameBoard));
+        return newBoard;
+    }
+
 }
