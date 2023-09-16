@@ -12,12 +12,20 @@ public class PlayerTurn {
     int[] point1;
     int[] point2;
 
-    int boardSize;
-    HashMap<int[][], Integer> gameBoard = new HashMap<>();
+    int[] numbers;
+    int r1;
+    int c1;
+    int r2;
+    int c2;
 
-    public PlayerTurn(HashMap<int[][], Integer> currentBoard, int sizeOfCurrentBoard, int whichPlayer){
+    int boardSize;
+    //HashMap<int[][], Integer> gameBoard = new HashMap<>();
+
+    Board gameBoard;
+
+    public PlayerTurn(/*HashMap<int[][], Integer> currentBoard,*/ Board theGameBoard, int sizeOfCurrentBoard, int whichPlayer){
         boardSize = sizeOfCurrentBoard;
-        gameBoard = currentBoard;
+        gameBoard = theGameBoard;
         System.out.println("Player " + whichPlayer + "'s Turn!");
         takeTurn(whichPlayer);
     }
@@ -25,8 +33,25 @@ public class PlayerTurn {
     private void takeTurn(Integer whichPlayer){
         //Get response from Player "((r1,c1),(r2,c2))"
         if(isValidResponse(scan.nextLine())) {
-            int[][] line = {point1, point2};
-            gameBoard.put(line, whichPlayer);
+            int distanceBetweenRows = Math.abs(r1-r2);
+            int distanceBetweenCols = Math.abs(c1-c2);
+            if (((distanceBetweenRows == 1) && (distanceBetweenCols == 0))){
+                //Vertical Line
+                Box leftBox = gameBoard.getBox(Math.min(r1,r2),c1-1);
+                Box rightBox = gameBoard.getBox(Math.min(r1,r2),c1);
+
+                leftBox.right = true;
+                rightBox.left = true;
+
+            } //Checks to see if rows or columns but not both are next to each other
+            if(((distanceBetweenCols == 1) && (distanceBetweenRows == 0))) {
+                //Horizontal Line
+                Box aboveBox = gameBoard.getBox(r1 - 1, Math.min(c1, c2));
+                Box belowBox = gameBoard.getBox(r1, Math.min(c1, c2));
+
+                aboveBox.bottom = true;
+                belowBox.top = true;
+            }
         }
         else{
             //invalid, do it again
@@ -59,16 +84,15 @@ public class PlayerTurn {
      * @return true if the above conditions are satisfied, false otherwise
      */
     private boolean isValidResponse(String response){
-        String workingResp = response.replaceAll("\\s", ""); //A trimmed version of response getting rid of all white space
-        String pattern = "\\(\\(-?\\d+,\\d+\\),\\(-?\\d+,\\d+\\)\\)"; //The pattern '((X1,Y1),(X2,Y2))'
-        Pattern regex = Pattern.compile(pattern);
-        Matcher matcher = regex.matcher(workingResp);
-        if (matcher.matches()){
-            int[] numbers = getNums(workingResp);
-            int r1 = numbers[0];
-            int c1 = numbers[1];
-            int r2 = numbers[2];
-            int c2 = numbers[3];
+        //String pattern = "\\(\\(-?\\d+,\\d+\\),\\(-?\\d+,\\d+\\)\\)"; //The pattern '((X1,Y1),(X2,Y2))'
+        //Pattern regex = Pattern.compile(pattern);
+        //Matcher matcher = regex.matcher(workingResp);
+        //if (matcher.matches()){
+        numbers = getNums(response);
+        r1 = numbers[0];
+        c1 = numbers[1];
+        r2 = numbers[2];
+        c2 = numbers[3];
 
             boolean inRange = false;
 
@@ -81,20 +105,15 @@ public class PlayerTurn {
             }
 
             if (inRange){
-                int distanceBetweenRows = Math.abs(r1-r2);
-                int distanceBetweenCols = Math.abs(c1-c2);
-                if (((distanceBetweenRows == 1) && (distanceBetweenCols == 0)) || //Checks to see if rows or columns but not both are next to each other
-                        ((distanceBetweenCols == 1) && (distanceBetweenRows == 0))){
                     //If the current line has not already been drawn
-                    point1 = new int[]{r1, c1};
-                    point2 = new int[]{r2, c2};
-                    if (!gameBoard.containsKey(new int[][]{point1, point2})){
+                    //point1 = new int[]{r1, c1};
+                    //point2 = new int[]{r2, c2};
+                    //if (!gameBoard.containsKey(new int[][]{point1, point2})){
                         return true;
-                    }
+                    //
                 }
 
-            }
-        }
+        //}
         return false;
     }
 }

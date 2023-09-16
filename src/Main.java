@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         //Main basically just starts the game and makes it n x n, then passes it off to Game
         //TODO switch off between player and ai, also make ai lmao oops
-        boolean startGame = false;
+        /*boolean startGame = false;
         System.out.println("Hello! Would you like to play a game of Dots and Boxes?!");
         Scanner scan = new Scanner(System.in);
         for(;;) {
@@ -30,21 +30,22 @@ public class Main {
                 scan.next();
             }
             int n = scan.nextInt();
-            System.out.println("Slay, let's start!");
-            Game game = new Game(n,n);
-            game.printBoard();
-            HashMap<int[][], Integer> lineList = new HashMap<>();
-            while(true/*win*/) {
-                PlayerTurn player1Turn = new PlayerTurn(lineList, n, 1);
-                //If win, end
-                if (false/*win*/)
-                    break;
+            System.out.println("Slay, let's start!");*/
+        Game game = new Game(9, 9);
+        game.printBoard();
+        //HashMap<int[][], Integer> lineList = new HashMap<>();
+        Board gameBoard = new Board();
+        while (true/*win*/) {
+            PlayerTurn player1Turn = new PlayerTurn(gameBoard, 9, 1);
+            //If win, end
+            if (false/*win*/)
+                break;
 
-                PlayerTurn player2Turn = new PlayerTurn(lineList, n, 2);
-                //If win, end
-            }
-
+            PlayerTurn player2Turn = new PlayerTurn(gameBoard, 9, 2);
+            //If win, end
         }
+
+        //}
 
     }
 }
