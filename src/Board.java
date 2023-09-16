@@ -69,7 +69,6 @@ public class Board {
         for (int i = 0; i < rows; i++) {
             System.arraycopy(gameBoard[i], 0, newBoard.gameBoard[i], 0, cols);
         }
-        System.out.println(Arrays.deepToString(newBoard.gameBoard));
         return newBoard;
     }
 
