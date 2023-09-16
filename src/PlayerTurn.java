@@ -32,8 +32,17 @@ public class PlayerTurn extends Turn{
 
     private void takeTurn(Integer whichPlayer) {
         //Get response from Player "((r1,c1),(r2,c2))"
-        if (isValidResponse(scan.nextLine())) {
-            AITurn.updateBoard(r1, c1, r2, c2, gameBoard);
+        String response = scan.nextLine();
+        if (isValidResponse(response)) {
+            updateBoard(r1, c1, r2, c2, gameBoard, response.substring(0, response.indexOf(" ")));
+            for (Edge edge : gameBoard.edges){
+                if (edge.row1 == r1 && edge.col1 == c1 && edge.row2 == r2 && edge.col2 == c2){
+                    gameBoard.edges.remove(edge);
+                    System.out.println("Removed Edge");
+                    break;
+                }
+            }
+
         }
         else {
                 //invalid, do it again
