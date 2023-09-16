@@ -2,8 +2,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
-
+    static int boardSize = 2;
     public static void main(String[] args) {
+
         //Main basically just starts the game and makes it n x n, then passes it off to Game
         //TODO switch off between player and ai, also make ai lmao oops
         /*boolean startGame = false;
@@ -31,17 +32,17 @@ public class Main {
             }
             int n = scan.nextInt();
             System.out.println("Slay, let's start!");*/
-        Game game = new Game(9, 9);
+        Game game = new Game(boardSize, boardSize);
         game.printBoard();
         //HashMap<int[][], Integer> lineList = new HashMap<>();
         Board gameBoard = new Board();
         while (true/*win*/) {
-            AITurn steveTurn = new AITurn(gameBoard, 9, 1);
+            AITurn steveTurn = new AITurn(gameBoard, boardSize, 1);
             //If win, end
             if (false/*win*/)
                 break;
 
-            PlayerTurn playerTurn = new PlayerTurn(gameBoard, 9, 2);
+            PlayerTurn playerTurn = new PlayerTurn(gameBoard, boardSize, 2);
             //If win, end
         }
 

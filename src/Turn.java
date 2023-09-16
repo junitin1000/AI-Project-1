@@ -14,7 +14,7 @@ public class Turn {
                 rightBox.left = true;
                 rightBox.checkComplete(name);
             }
-            else if (c1 == 9){
+            else if (c1 == Main.boardSize){
                 Box leftBox = aBoard.getBox(Math.min(r1, r2), c1 - 1);
                 leftBox.right = true;
                 leftBox.checkComplete(name);
@@ -37,7 +37,7 @@ public class Turn {
                 belowBox.top = true;
                 belowBox.checkComplete(name);
             }
-            else if (r1 == 9){
+            else if (r1 == Main.boardSize){
                 Box aboveBox = aBoard.getBox(r1 - 1, Math.min(c1, c2));
                 aboveBox.bottom = true;
                 aboveBox.checkComplete(name);

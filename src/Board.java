@@ -13,9 +13,9 @@ public class Board {
 
     public Board(){
         score = 0;
-        gameBoard = new Box[9][9];
-        for (int i = 0; i < 9; i++){
-            for (int j = 0; j < 9; j++){
+        gameBoard = new Box[Main.boardSize][Main.boardSize];
+        for (int i = 0; i < Main.boardSize; i++){
+            for (int j = 0; j < Main.boardSize; j++){
                 gameBoard[i][j] = new Box();
             }
         }
@@ -28,8 +28,8 @@ public class Board {
 
     public void initializeEdges(){
         edges = new ArrayList<Edge>();
-        for(int i=0; i<=9; i++){
-            for(int j=0; j<9; j++){
+        for(int i=0; i<=Main.boardSize; i++){
+            for(int j=0; j<Main.boardSize; j++){
                 edges.add(new Edge(i, j, i, j+1)); // horizontal edges
                 edges.add(new Edge(j, i, j+1, i)); // vertical edges
             }
@@ -39,8 +39,8 @@ public class Board {
 
     public int getScore() {
         int count = 0;
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
+        for (int i = 0; i < Main.boardSize; i++) {
+            for (int j = 0; j < Main.boardSize; j++) {
                 Box aBox = gameBoard[i][j];
                 if(aBox.takenBy.equals("steve")){
                     count++;
