@@ -14,13 +14,13 @@ public class Box implements Cloneable{
         takenBy = "";
     }
 
-    public boolean checkComplete(String name){
+    public boolean checkComplete(String name, boolean realTurn){
         boolean complete = false;
         if (top && bottom && left && right){
             takenBy = name;
             complete = true;
-//            if (!name.equals("mind greg"))
-//                System.out.println("BOX TAKEN BY " + name + "!!!");
+            if (realTurn)
+                System.out.println("BOX TAKEN BY " + name + "!!!");
         }
         return complete;
     }
