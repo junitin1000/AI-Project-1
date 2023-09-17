@@ -44,7 +44,6 @@ public class PlayerTurn extends Turn{
                             (edge.row1 == r2 && edge.col1 == c2 && edge.row2 == r1 && edge.col2 == c1)) {
                         gameBoard.edges.remove(edge);
                         validCheck = true;
-                        System.out.println("Removed Edge");
                         break;
                     }
                 }
