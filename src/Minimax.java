@@ -27,14 +27,15 @@ public class Minimax {
             for (Edge move : moves){
                 @SuppressWarnings("unchecked") ArrayList<Edge> otherMoves = (ArrayList<Edge>) moves.clone();
                 otherMoves.remove(move);
+                //TODO if move causes a move that will complete a square, minimaxDecision isMaximizing is true
                 int potentialMax = minimaxDecision(otherMoves, makeMove(move.row1, move.col1, move.row2, move.col2, board, "steve"), false, depth-1).getValue();
                 if (potentialMax > max){
                     max = potentialMax;
                     bestEdgeSoFar = move;
                 }
-                if(min <= max) {
-                    break;
-                }
+//                if(min <= max) {
+//                    break;
+//                }
             }
             return new BestEdge(bestEdgeSoFar, max);
         }
@@ -47,9 +48,9 @@ public class Minimax {
                     min = potentialMin;
                     bestEdgeSoFar = move;
                 }
-                if(min >= max) {
-                    break;
-                }
+//                if(min >= max) {
+//                    break;
+//                }
             }
             return new BestEdge(bestEdgeSoFar, min);
         }
