@@ -19,15 +19,15 @@ public class AITurn extends Turn {
     public AITurn(/*HashMap<int[][], Integer> currentBoard,*/ Board theGameBoard, int sizeOfCurrentBoard, int whichPlayer){
         boardSize = sizeOfCurrentBoard;
         gameBoard = theGameBoard;
-        System.out.println("steve's Turn!");
     }
 
     public boolean takeTurn(Integer whichPlayer){
+        System.out.println("steve's Turn!");
         Minimax minimax = new Minimax();
         double start = System.currentTimeMillis();
         Edge decision = minimax.bestMove(gameBoard);
         double finish = System.currentTimeMillis();
-        String moveToMake = "steve " + decision.row1 + "," + decision.col1 + " " + decision.row2 + "," + decision.col2;
+        String moveToMake = "STEVE " + decision.row1 + "," + decision.col1 + " " + decision.row2 + "," + decision.col2;
         System.out.println(moveToMake);
         System.out.println("Time Taken: " + (finish-start)/1000);
         int[] numbers = getNums(moveToMake);
@@ -37,7 +37,7 @@ public class AITurn extends Turn {
         int c2 = numbers[3];
 
         //Update real board
-        boolean complete = updateBoard(r1, c1, r2, c2, gameBoard, "steve");
+        boolean complete = updateBoard(r1, c1, r2, c2, gameBoard, "steve", true);
         gameBoard.edges.remove(decision);
         return complete;
 

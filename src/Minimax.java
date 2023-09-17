@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Minimax {
 
+    public double timeLimit = 10;
 
     /**
      * Returns the best move given a certain board state
@@ -12,7 +13,8 @@ public class Minimax {
     public Edge bestMove(Board currentBoard) {
 
         ArrayList<Edge> moves = currentBoard.edges;
-        BestEdge decision = minimaxDecision(moves, currentBoard, true,4);
+        double start = 0;
+        BestEdge decision = minimaxDecision(moves, currentBoard, true,6);
         System.out.println("Steve picked with value of " + decision.getValue());
         return decision.getEdge();
 }
@@ -68,7 +70,7 @@ public class Minimax {
      * Additionally: potentialBoard inputted will be changed with the potential move made
      */
     private boolean makeMove(int r1, int c1, int r2, int c2, Board potentialBoard, String name){
-        boolean completed = Turn.updateBoard(r1, c1, r2, c2, potentialBoard, name);
+        boolean completed = Turn.updateBoard(r1, c1, r2, c2, potentialBoard, name, false);
         return completed;
     }
 

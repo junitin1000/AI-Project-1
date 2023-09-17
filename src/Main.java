@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
-    static int boardSize = 2;
+    static int boardSize = 3;
     public static void main(String[] args) {
 
         //Main basically just starts the game and makes it n x n, then passes it off to Game
@@ -40,12 +40,10 @@ public class Main {
         AITurn steveTurn = new AITurn(gameBoard, boardSize, 1);
         PlayerTurn gregTurn = new PlayerTurn(gameBoard, boardSize, 2);
         if (steveGoesFirst()){
-            System.out.println("steve's turn:");
             goAgain = steveTurn.takeTurn(1);
             playerLastWent = "steve";
         }
         else{
-            System.out.println("greg's turn:");
             goAgain = gregTurn.takeTurn(2);
             playerLastWent = "greg";
         }
@@ -54,29 +52,36 @@ public class Main {
 
             if (counter == boardSize * (boardSize+1)*2) /*game is complete*/{
                 //Initiate ENDGAME
+                String winningPlayer;
+                if (gameBoard.getScore() > 0){
+                    winningPlayer = "steve";
+                }
+                else if (gameBoard.getScore() < 0){
+                    winningPlayer = "greg";
+                }
+                else{
+                    System.out.println("GAME OVER: It's a tie!");
+                    break;
+                }
                 System.out.println("GAME OVER: " + playerLastWent + " WINS!");
                 break;
             }
             else if (goAgain){
                 if (playerLastWent.equals("steve")) {
-                    System.out.println("steve's turn: ");
                     goAgain = steveTurn.takeTurn(1);
                     playerLastWent = "steve";
                 }
                 else{
-                    System.out.println("greg's turn: ");
                     goAgain = gregTurn.takeTurn(2);
                     playerLastWent = "greg";
                 }
             }
             else{
                 if (playerLastWent.equals("steve")) {
-                    System.out.println("greg's turn: ");
                     goAgain = gregTurn.takeTurn(2);
                     playerLastWent = "greg";
                 }
                 else{
-                    System.out.println("steve's turn: ");
                     goAgain = steveTurn.takeTurn(1);
                     playerLastWent = "steve";
                 }

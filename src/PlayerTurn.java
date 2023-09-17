@@ -26,28 +26,39 @@ public class PlayerTurn extends Turn{
     public PlayerTurn(/*HashMap<int[][], Integer> currentBoard,*/ Board theGameBoard, int sizeOfCurrentBoard, int whichPlayer){
         boardSize = sizeOfCurrentBoard;
         gameBoard = theGameBoard;
-        System.out.println("Player " + whichPlayer + "'s Turn!");
+
     }
 
     public boolean takeTurn(Integer whichPlayer) {
+        System.out.println("greg's Turn!");
         //Get response from Player "((r1,c1),(r2,c2))"
-        String response = scan.nextLine();
         boolean complete = false;
-        if (isValidResponse(response)) {
-            complete = updateBoard(r1, c1, r2, c2, gameBoard, response.substring(0, response.indexOf(" ")));
-            for (Edge edge : gameBoard.edges){
-                if (edge.row1 == r1 && edge.col1 == c1 && edge.row2 == r2 && edge.col2 == c2){
-                    gameBoard.edges.remove(edge);
-                    System.out.println("Removed Edge");
-                    break;
+        boolean doItAgain = true;
+        while (doItAgain) {
+            String response = scan.nextLine();
+            if (isValidResponse(response)) {
+                boolean validCheck = false;
+                complete = updateBoard(r1, c1, r2, c2, gameBoard, response.substring(0, response.indexOf(" ")), true);
+                for (Edge edge : gameBoard.edges) {
+                    if ((edge.row1 == r1 && edge.col1 == c1 && edge.row2 == r2 && edge.col2 == c2) ||
+                            (edge.row1 == r2 && edge.col1 == c2 && edge.row2 == r1 && edge.col2 == c1)) {
+                        gameBoard.edges.remove(edge);
+                        validCheck = true;
+                        System.out.println("Removed Edge");
+                        break;
+                    }
                 }
-            }
+                if (!validCheck) {
+                    System.out.println("Invalid Edge. Try Again");
+                }
+                else
+                    doItAgain = false;
 
-        }
-        else {
+            } else {
                 //invalid, do it again
-                System.out.println("Fuck!");
+                System.out.println("Edge out of Bounds. Try Again");
             }
+        }
         return complete;
     }
 
