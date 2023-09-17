@@ -28,7 +28,9 @@ public class Minimax {
                 @SuppressWarnings("unchecked") ArrayList<Edge> otherMoves = (ArrayList<Edge>) moves.clone();
                 otherMoves.remove(move);
                 //TODO if move causes a move that will complete a square, minimaxDecision isMaximizing is true
-                int potentialMax = minimaxDecision(otherMoves, makeMove(move.row1, move.col1, move.row2, move.col2, board, "steve"), false, depth-1).getValue();
+                Board potentialBoard = board.deepCopy();
+                boolean completed = makeMove(move.row1, move.col1, move.row2, move.col2, potentialBoard, "steve");
+                int potentialMax = minimaxDecision(otherMoves, potentialBoard, completed, depth-1).getValue();
                 if (potentialMax > max){
                     max = potentialMax;
                     bestEdgeSoFar = move;
@@ -43,7 +45,9 @@ public class Minimax {
             for (Edge move : moves){
                 @SuppressWarnings("unchecked") ArrayList<Edge> otherMoves = (ArrayList<Edge>) moves.clone();
                 otherMoves.remove(move);
-                int potentialMin = minimaxDecision(otherMoves, makeMove(move.row1, move.col1, move.row2, move.col2, board, "mind greg"), true, depth-1).getValue();
+                Board potentialBoard = board.deepCopy();
+                boolean completed = makeMove(move.row1, move.col1, move.row2, move.col2, potentialBoard, "mind greg");
+                int potentialMin = minimaxDecision(otherMoves, potentialBoard, !completed, depth-1).getValue();
                 if (potentialMin < min){
                     min = potentialMin;
                     bestEdgeSoFar = move;

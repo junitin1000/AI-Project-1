@@ -20,10 +20,9 @@ public class AITurn extends Turn {
         boardSize = sizeOfCurrentBoard;
         gameBoard = theGameBoard;
         System.out.println("steve's Turn!");
-        takeTurn(whichPlayer);
     }
 
-    private void takeTurn(Integer whichPlayer){
+    public boolean takeTurn(Integer whichPlayer){
         Minimax minimax = new Minimax();
         double start = System.currentTimeMillis();
         Edge decision = minimax.bestMove(gameBoard);
@@ -38,8 +37,9 @@ public class AITurn extends Turn {
         int c2 = numbers[3];
 
         //Update real board
-        updateBoard(r1, c1, r2, c2, gameBoard, "steve");
+        boolean complete = updateBoard(r1, c1, r2, c2, gameBoard, "steve");
         gameBoard.edges.remove(decision);
+        return complete;
 
     }
 

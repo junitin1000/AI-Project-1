@@ -34,19 +34,89 @@ public class Main {
             System.out.println("Slay, let's start!");*/
         Game game = new Game(boardSize, boardSize);
         game.printBoard();
-        //HashMap<int[][], Integer> lineList = new HashMap<>();
+        String playerLastWent;
         Board gameBoard = new Board();
-        while (true/*win*/) {
+        boolean goAgain;
+        AITurn steveTurn = new AITurn(gameBoard, boardSize, 1);
+        PlayerTurn gregTurn = new PlayerTurn(gameBoard, boardSize, 2);
+        if (steveGoesFirst()){
+            System.out.println("steve's turn:");
+            goAgain = steveTurn.takeTurn(1);
+            playerLastWent = "steve";
+        }
+        else{
+            System.out.println("greg's turn:");
+            goAgain = gregTurn.takeTurn(2);
+            playerLastWent = "greg";
+        }
+        int counter = 1;
+        while (true) {
+
+            if (counter == boardSize * (boardSize+1)*2) /*game is complete*/{
+                //Initiate ENDGAME
+                System.out.println("GAME OVER: " + playerLastWent + " WINS!");
+                break;
+            }
+            else if (goAgain){
+                if (playerLastWent.equals("steve")) {
+                    System.out.println("steve's turn: ");
+                    goAgain = steveTurn.takeTurn(1);
+                    playerLastWent = "steve";
+                }
+                else{
+                    System.out.println("greg's turn: ");
+                    goAgain = gregTurn.takeTurn(2);
+                    playerLastWent = "greg";
+                }
+            }
+            else{
+                if (playerLastWent.equals("steve")) {
+                    System.out.println("greg's turn: ");
+                    goAgain = gregTurn.takeTurn(2);
+                    playerLastWent = "greg";
+                }
+                else{
+                    System.out.println("steve's turn: ");
+                    goAgain = steveTurn.takeTurn(1);
+                    playerLastWent = "steve";
+                }
+            }
+            counter++;
+        }
+
+        /*//HashMap<int[][], Integer> lineList = new HashMap<>();
+        Board gameBoard = new Board();
+        if (steveGoesFirst()){
+
+        }
+
+        while (true*//*win*//*) {
+            int scoreBefore = gameBoard.score;
+            if (*//*The total score is equal to the size of the board*//*){
+                //END GAME
+                break;
+            }
+
+            if (*//*score changed*//*){
+                if (*//**//*)
+                AITurn steveTurn = new AITurn(gameBoard, boardSize, 1);
+            }
+            else if (*//*score did not change*//*)
             AITurn steveTurn = new AITurn(gameBoard, boardSize, 1);
             //If win, end
-            if (false/*win*/)
+            if (false*//*win*//*)
                 break;
 
             PlayerTurn playerTurn = new PlayerTurn(gameBoard, boardSize, 2);
-            //If win, end
-        }
+            //If win, end*/
+        //}
 
         //}
 
+    }
+
+    public static boolean steveGoesFirst(){
+        //TODO integrate with referee later
+        return true;
     }
 }

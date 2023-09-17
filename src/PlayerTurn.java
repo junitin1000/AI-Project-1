@@ -27,14 +27,14 @@ public class PlayerTurn extends Turn{
         boardSize = sizeOfCurrentBoard;
         gameBoard = theGameBoard;
         System.out.println("Player " + whichPlayer + "'s Turn!");
-        takeTurn(whichPlayer);
     }
 
-    private void takeTurn(Integer whichPlayer) {
+    public boolean takeTurn(Integer whichPlayer) {
         //Get response from Player "((r1,c1),(r2,c2))"
         String response = scan.nextLine();
+        boolean complete = false;
         if (isValidResponse(response)) {
-            updateBoard(r1, c1, r2, c2, gameBoard, response.substring(0, response.indexOf(" ")));
+            complete = updateBoard(r1, c1, r2, c2, gameBoard, response.substring(0, response.indexOf(" ")));
             for (Edge edge : gameBoard.edges){
                 if (edge.row1 == r1 && edge.col1 == c1 && edge.row2 == r2 && edge.col2 == c2){
                     gameBoard.edges.remove(edge);
@@ -48,6 +48,7 @@ public class PlayerTurn extends Turn{
                 //invalid, do it again
                 System.out.println("Fuck!");
             }
+        return complete;
     }
 
     private int[] getNums(String num){
