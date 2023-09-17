@@ -19,6 +19,14 @@ public class Minimax {
         return decision.getEdge();
 }
 
+    /**
+     * Recursive alg that Decides the BestEdge
+     * @param moves ArrayList<Edge> of all possible moves remaining
+     * @param board is the currect game Board
+     * @param isMaximizing is if the player is the maximizing player
+     * @param depth is how deep in th tree to look before cutting off
+     * @return the BestEdge (which edge to pick along with the value of why we chose it)
+     */
     public BestEdge minimaxDecision(ArrayList<Edge> moves, Board board, Boolean isMaximizing, int depth){
         Edge bestEdgeSoFar = null;
         if (depth == 0 || moves.size() == 0){
@@ -62,6 +70,54 @@ public class Minimax {
         }
     }
 
+
+    /**
+     * MinimaxDecision but with alpha beta pruning
+     * alpha is the best maximizer currently guaranteed
+     * beta is the best minimizer currently guaranteed
+     */
+    public BestEdge minimaxAB(ArrayList<Edge> moves, Board board, Boolean isMaximizing, int depth, int alpha, int beta){
+        Edge bestEdgeSoFar = null;
+        if (depth == 0 || moves.size() == 0){
+            return new BestEdge(bestEdgeSoFar, board.getScore());
+        }
+        int max = -81;
+        int min = 81;
+        if (isMaximizing){
+            for (Edge move : moves){
+                @SuppressWarnings("unchecked") ArrayList<Edge> otherMoves = (ArrayList<Edge>) moves.clone();
+                otherMoves.remove(move);
+                Board potentialBoard = board.deepCopy();
+                boolean completed = makeMove(move.row1, move.col1, move.row2, move.col2, potentialBoard, "steve");
+                int potentialMax = minimaxDecision(otherMoves, potentialBoard, completed, depth-1).getValue();
+                if (potentialMax > max){
+                    max = potentialMax;
+                    bestEdgeSoFar = move;
+                }
+//                if(min <= max) {
+//                    break;
+//                }
+            }
+            return new BestEdge(bestEdgeSoFar, max);
+        }
+        else{
+            for (Edge move : moves){
+                @SuppressWarnings("unchecked") ArrayList<Edge> otherMoves = (ArrayList<Edge>) moves.clone();
+                otherMoves.remove(move);
+                Board potentialBoard = board.deepCopy();
+                boolean completed = makeMove(move.row1, move.col1, move.row2, move.col2, potentialBoard, "mind greg");
+                int potentialMin = minimaxDecision(otherMoves, potentialBoard, !completed, depth-1).getValue();
+                if (potentialMin < min){
+                    min = potentialMin;
+                    bestEdgeSoFar = move;
+                }
+//                if(min >= max) {
+//                    break;
+//                }
+            }
+            return new BestEdge(bestEdgeSoFar, min);
+        }
+    }
 
     /**
      * makeMove clones the original board, then makes the move specified by r1, c1, r2, c2 on that cloned board
