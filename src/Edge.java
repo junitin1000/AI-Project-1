@@ -1,5 +1,7 @@
 import jdk.nashorn.internal.objects.annotations.Getter;
 
+import java.util.ArrayList;
+
 public class Edge {
     int row1;
     int col1;
@@ -18,4 +20,5 @@ public class Edge {
     private void printEdge() {
         System.out.println("New Edge: (" + row1 + ", " + col1 + ") (" + row2 + ", " + col2 + ")");
     }
+
 }

@@ -60,6 +60,9 @@ public class Turn {
             }else {
                 aBoard.score--;
             }
+            if(realTurn) {
+                System.out.println("Score: " + aBoard.score);
+            }
         }
 
         return completedBox;
