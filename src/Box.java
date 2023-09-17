@@ -14,12 +14,15 @@ public class Box implements Cloneable{
         takenBy = "";
     }
 
-    public void checkComplete(String name){
+    public boolean checkComplete(String name){
+        boolean complete = false;
         if (top && bottom && left && right){
             takenBy = name;
-            if (!name.equals("mind greg"))
-                System.out.println("BOX TAKEN BY " + name + "!!!");
+            complete = true;
+//            if (!name.equals("mind greg"))
+//                System.out.println("BOX TAKEN BY " + name + "!!!");
         }
+        return complete;
     }
 
     // Override the clone method to create a deep copy of a Box.
