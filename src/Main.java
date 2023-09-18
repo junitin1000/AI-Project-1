@@ -13,8 +13,20 @@ public class Main {
         Board gameBoard = new Board();
         boolean goAgain;
         AITurn steveTurn = new AITurn(gameBoard, boardSize, "steve");
-        //PlayerTurn gregTurn = new PlayerTurn(gameBoard, boardSize, "greg");
-        AITurn gregTurn = new AITurn(gameBoard, boardSize, "greg");
+        System.out.println("Do you want to play with AI vs. AI or Player vs. AI?");
+        Scanner scan = new Scanner(System.in);
+        String AIorPlayer = scan.nextLine();
+        Turn gregTurn;
+
+        if (AIorPlayer.equals("AI")){
+            gregTurn = new AITurn(gameBoard, boardSize, "greg");
+        }
+        else {
+            gregTurn = new PlayerTurn(gameBoard, boardSize, "greg");
+        }
+
+
+
         if (steveGoesFirst()){
             goAgain = steveTurn.takeTurn();
             playerLastWent = "steve";
