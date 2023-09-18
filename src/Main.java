@@ -3,7 +3,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    static int boardSize = 9;
+    static int boardSize = 2;
     public static void main(String[] args) {
 
 
@@ -12,14 +12,15 @@ public class Main {
         String playerLastWent;
         Board gameBoard = new Board();
         boolean goAgain;
-        AITurn steveTurn = new AITurn(gameBoard, boardSize, 1);
-        PlayerTurn gregTurn = new PlayerTurn(gameBoard, boardSize, 2);
+        AITurn steveTurn = new AITurn(gameBoard, boardSize, "steve");
+        //PlayerTurn gregTurn = new PlayerTurn(gameBoard, boardSize, "greg");
+        AITurn gregTurn = new AITurn(gameBoard, boardSize, "greg");
         if (steveGoesFirst()){
-            goAgain = steveTurn.takeTurn(1);
+            goAgain = steveTurn.takeTurn();
             playerLastWent = "steve";
         }
         else{
-            goAgain = gregTurn.takeTurn(2);
+            goAgain = gregTurn.takeTurn();
             playerLastWent = "greg";
         }
         int counter = 1;
@@ -28,10 +29,10 @@ public class Main {
             if (counter == boardSize * (boardSize+1)*2) /*game is complete*/{
                 //Initiate ENDGAME
                 String winningPlayer;
-                if (gameBoard.getScore() > 0){
+                if (gameBoard.getScore("steve") > 0){
                     winningPlayer = "steve";
                 }
-                else if (gameBoard.getScore() < 0){
+                else if (gameBoard.getScore("steve") < 0){
                     winningPlayer = "greg";
                 }
                 else{
@@ -43,21 +44,21 @@ public class Main {
             }
             else if (goAgain){
                 if (playerLastWent.equals("steve")) {
-                    goAgain = steveTurn.takeTurn(1);
+                    goAgain = steveTurn.takeTurn();
                     playerLastWent = "steve";
                 }
                 else{
-                    goAgain = gregTurn.takeTurn(2);
+                    goAgain = gregTurn.takeTurn();
                     playerLastWent = "greg";
                 }
             }
             else{
                 if (playerLastWent.equals("steve")) {
-                    goAgain = gregTurn.takeTurn(2);
+                    goAgain = gregTurn.takeTurn();
                     playerLastWent = "greg";
                 }
                 else{
-                    goAgain = steveTurn.takeTurn(1);
+                    goAgain = steveTurn.takeTurn();
                     playerLastWent = "steve";
                 }
             }

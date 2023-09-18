@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 public class Minimax {
 
+    int depth = 4;
+
     public double timeLimit = 10;
 
     /**
@@ -10,23 +12,27 @@ public class Minimax {
      * @param currentBoard is the games currentBoard state
      * @return playername row1,col1 row2,col2 best move to play
      */
-    public Edge bestMove(Board currentBoard) {
+    public Edge bestMove(Board currentBoard, String name) {
 
         ArrayList<Edge> moves = currentBoard.edges;
         double start = 0;
-        BestEdge decision = minimaxDecision(moves, currentBoard, true,4);
-        System.out.println("Steve picked with value of " + decision.getValue());
+        //BestEdge decision = minimaxDecision(moves, currentBoard, true,5);
+        BestEdge decision = minimaxAB(moves, currentBoard, true,depth,Integer.MIN_VALUE, Integer.MAX_VALUE, name);
+        System.out.println(name + " picked with value of " + decision.getValue());
         return decision.getEdge();
 }
+/*
 
-    /**
+    */
+/**
      * Recursive alg that Decides the BestEdge
      * @param moves ArrayList<Edge> of all possible moves remaining
      * @param board is the currect game Board
      * @param isMaximizing is if the player is the maximizing player
      * @param depth is how deep in th tree to look before cutting off
      * @return the BestEdge (which edge to pick along with the value of why we chose it)
-     */
+     *//*
+
     public BestEdge minimaxDecision(ArrayList<Edge> moves, Board board, Boolean isMaximizing, int depth){
         Edge bestEdgeSoFar = null;
         if (depth == 0 || moves.size() == 0){
@@ -69,6 +75,7 @@ public class Minimax {
             return new BestEdge(bestEdgeSoFar, min);
         }
     }
+*/
 
 
     /**
@@ -76,10 +83,10 @@ public class Minimax {
      * alpha is the best maximizer currently guaranteed
      * beta is the best minimizer currently guaranteed
      */
-    public BestEdge minimaxAB(ArrayList<Edge> moves, Board board, Boolean isMaximizing, int depth, int alpha, int beta){
+    public BestEdge minimaxAB(ArrayList<Edge> moves, Board board, Boolean isMaximizing, int depth, int alpha, int beta, String name){
         Edge bestEdgeSoFar = null;
         if (depth == 0 || moves.size() == 0){
-            return new BestEdge(bestEdgeSoFar, board.getScore());
+            return new BestEdge(bestEdgeSoFar, board.getScore(name));
         }
         int max = -81;
         int min = 81;
@@ -88,15 +95,17 @@ public class Minimax {
                 @SuppressWarnings("unchecked") ArrayList<Edge> otherMoves = (ArrayList<Edge>) moves.clone();
                 otherMoves.remove(move);
                 Board potentialBoard = board.deepCopy();
-                boolean completed = makeMove(move.row1, move.col1, move.row2, move.col2, potentialBoard, "steve");
-                int potentialMax = minimaxDecision(otherMoves, potentialBoard, completed, depth-1).getValue();
+                boolean completed = makeMove(move.row1, move.col1, move.row2, move.col2, potentialBoard, name);
+                int potentialMax = minimaxAB(otherMoves, potentialBoard, completed, depth-1, alpha, beta, name).getValue();
                 if (potentialMax > max){
                     max = potentialMax;
                     bestEdgeSoFar = move;
                 }
-//                if(min <= max) {
-//                    break;
-//                }
+                alpha = Math.max(alpha, potentialMax);
+                if (beta <= alpha){
+                    break;
+                }
+
             }
             return new BestEdge(bestEdgeSoFar, max);
         }
@@ -106,14 +115,15 @@ public class Minimax {
                 otherMoves.remove(move);
                 Board potentialBoard = board.deepCopy();
                 boolean completed = makeMove(move.row1, move.col1, move.row2, move.col2, potentialBoard, "mind greg");
-                int potentialMin = minimaxDecision(otherMoves, potentialBoard, !completed, depth-1).getValue();
+                int potentialMin = minimaxAB(otherMoves, potentialBoard, !completed, depth-1, alpha, beta, name).getValue();
                 if (potentialMin < min){
                     min = potentialMin;
                     bestEdgeSoFar = move;
                 }
-//                if(min >= max) {
-//                    break;
-//                }
+                beta = Math.min(beta, potentialMin);
+                if (beta <= alpha){
+                    break;
+                }
             }
             return new BestEdge(bestEdgeSoFar, min);
         }
