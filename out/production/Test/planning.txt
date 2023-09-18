@@ -1,0 +1,112 @@
+initialize empty board
+determine who goes first
+ask for move from first player
+attempt to add move.
+each edge placed is part of 2 potential squares.
+for each move, fully check both squares to determine if a square has been completed
+
+if square out of bounds, no completion
+if square in bounds and has all edges, completed
+if square in bounds but not all edges,  not completed
+
+if completed, add score to current player.
+player turn remains the same, and ask for another move
+
+if not completed, no score change,
+so switch player turn, and ask for another move.
+
+if no moves left, end game.
+can keep track of based on number of edges and how many turns there have been
+
+for each move, have to determine if an edge is already there, or if out of bounds
+only need to keep track of who got which square for visual purposes, it doesn't actually matter for gameplay.
+
+board is an array, need board to string function, has some extra space.
+
+make move by connecting 2 dots, eg (0,1), (0,2)
+
+coords word as x, y where x is the row and y is the column
+
+sample board
+  0   1   2
+0 .   .   .
+
+1 .   .   .
+
+2 .   .   .
+
+
+
+vertical edge
+  0   1   2
+0 .   .   .
+      |
+1 .   |   .
+
+edge notation(coordinate order is reversible):
+(1,0), (1,1)
+or
+(1,1), (1,0)
+
+all vertical edges will have the same r value for both coords
+for all vertical edges the c value of both coords will have a difference of exactly 1
+
+possible square associated edges for any vertical edge (r, c1), (r, c2) where c1 < c2
+    note: while edge notation is reversible, these modification coordinates
+        are spefically for the notation of higher coord, lower coord. If instead
+        using a lower coord, higher coord notation, simple flip the the order of
+        modification coordinates
+
+square 1:
+(-1,0), (-1,0)
+(-1,0), (0,-1)
+(-1,+1), (0,0)
+
+square 2:
+(0,0), (+1,-1)
+(0,+1), (+1,0)
+(+1,0), (+1,0)
+
+
+
+horizontal edge
+  0   1
+0 .   .
+
+1 .___.
+
+2 .   .
+
+edge notation(coordinate order is reversible):
+(0,1), (1,1)
+or
+(1,1), (0,1)
+
+possible square associated edges for any horizontal edge (r1, c), (r2, c) where r1 < r2
+    note: while edge notation is reversible, these modification coordinates
+        are spefically for the notation of left coord, right coord. If instead
+        using a right coord, left coord notation, simple flip the the order of
+        modification coordinates
+
+square 1:
+(0,-1), (-1,0)
+(0,-1), (0,-1)
+(+1,-1), (0,0)
+
+square 2:
+(0,0), (-1,+1)
+(+1,0), (0,+1)
+(0,+1), (0,+1)
+
+
+player1 1,2 2,2
+player2 2,2 2,3
+player2 3,2 3,3
+player1 2,2 3,2
+player2 2,3 3,3
+player2 0,0 0,0
+player1 0,0 0,0
+player1 3,3 3,4
+player2 4,4 4,5
+
+
