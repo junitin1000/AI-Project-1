@@ -23,6 +23,7 @@ public class AITurn extends Turn {
         this.name = name;
     }
 
+    @Override
     public boolean takeTurn(){
         System.out.println(name + "'s Turn!");
         Minimax minimax = new Minimax();

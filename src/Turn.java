@@ -69,5 +69,9 @@ public class Turn {
     }
 
 
+    public boolean takeTurn(){
+        return false;
+    }
+
 
 }
