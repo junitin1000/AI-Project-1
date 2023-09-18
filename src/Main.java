@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
     static int boardSize = 2;
     public static void main(String[] args) {
-
+        Scanner scan = new Scanner(System.in);
 
         Game game = new Game(boardSize, boardSize);
         game.printBoard();
@@ -13,16 +13,21 @@ public class Main {
         Board gameBoard = new Board();
         boolean goAgain;
         AITurn steveTurn = new AITurn(gameBoard, boardSize, "steve");
-        System.out.println("Do you want to play with AI vs. AI or Player vs. AI?");
-        Scanner scan = new Scanner(System.in);
-        String AIorPlayer = scan.nextLine();
+        System.out.println("Do you want to play with AI vs. AI or Player vs. AI? (AI = 1, Player = 2)");
         Turn gregTurn;
+        while(true){
 
-        if (AIorPlayer.equals("AI")){
-            gregTurn = new AITurn(gameBoard, boardSize, "greg");
-        }
-        else {
-            gregTurn = new PlayerTurn(gameBoard, boardSize, "greg");
+            String AIorPlayer = scan.nextLine();
+
+            if (AIorPlayer.equals("1")) {
+                gregTurn = new AITurn(gameBoard, boardSize, "greg");
+                break;
+            } else if (AIorPlayer.equals("2")) {
+                gregTurn = new PlayerTurn(gameBoard, boardSize, "greg");
+                break;
+            } else {
+                System.out.println("Sorry, I didn't get that.");
+            }
         }
 
 
