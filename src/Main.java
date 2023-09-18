@@ -3,7 +3,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    static int boardSize = 2;
+    static int boardSize = 9;
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
@@ -56,7 +56,7 @@ public class Main {
                     System.out.println("GAME OVER: It's a tie!");
                     break;
                 }
-                System.out.println("GAME OVER: " + playerLastWent + " WINS!");
+                System.out.println("GAME OVER: " + winningPlayer + " WINS!");
                 break;
             }
             else if (goAgain){
