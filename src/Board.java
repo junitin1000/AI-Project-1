@@ -11,27 +11,27 @@ public class Board {
     int score; // p1 # boxes captured (maximizing) -
     // p2 # boxes captured (minimizing)
 
-    public Board(){
+    public Board() {
         score = 0;
         gameBoard = new Box[Main.boardSize][Main.boardSize];
-        for (int i = 0; i < Main.boardSize; i++){
-            for (int j = 0; j < Main.boardSize; j++){
+        for (int i = 0; i < Main.boardSize; i++) {
+            for (int j = 0; j < Main.boardSize; j++) {
                 gameBoard[i][j] = new Box();
             }
         }
         initializeEdges();
     }
 
-    public Board(Box[][] boxes){
+    public Board(Box[][] boxes) {
         this.gameBoard = boxes;
     }
 
-    public void initializeEdges(){
+    public void initializeEdges() {
         edges = new ArrayList<Edge>();
-        for(int i=0; i<=Main.boardSize; i++){
-            for(int j=0; j<Main.boardSize; j++){
-                edges.add(new Edge(i, j, i, j+1)); // horizontal edges
-                edges.add(new Edge(j, i, j+1, i)); // vertical edges
+        for (int i = 0; i <= Main.boardSize; i++) {
+            for (int j = 0; j < Main.boardSize; j++) {
+                edges.add(new Edge(i, j, i, j + 1)); // horizontal edges
+                edges.add(new Edge(j, i, j + 1, i)); // vertical edges
             }
         }
     }
@@ -42,9 +42,9 @@ public class Board {
         for (int i = 0; i < Main.boardSize; i++) {
             for (int j = 0; j < Main.boardSize; j++) {
                 Box aBox = gameBoard[i][j];
-                if(aBox.takenBy.equals(name)){
+                if (aBox.takenBy.equals(name)) {
                     count++;
-                } else if (!aBox.takenBy.equals("")){
+                } else if (!aBox.takenBy.equals("")) {
                     count--;
                 }
             }
@@ -56,7 +56,7 @@ public class Board {
         return edges;
     }
 
-    public Box getBox(int row, int col){
+    public Box getBox(int row, int col) {
         return gameBoard[row][col];
     }
 
@@ -72,7 +72,7 @@ public class Board {
         return newBoard;
     }
 
-    public Board deepCopy(){
+    public Board deepCopy() {
         // Implement a deep copy method for the Board.
         int numRows = gameBoard.length;
         int numCols = gameBoard[0].length;

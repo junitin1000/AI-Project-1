@@ -3,7 +3,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    static int boardSize = 9;
+    static int boardSize = 3;
+
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
@@ -15,7 +16,7 @@ public class Main {
         AITurn steveTurn = new AITurn(gameBoard, boardSize, "steve");
         System.out.println("Do you want to play with AI vs. AI or Player vs. AI? (AI = 1, Player = 2)");
         Turn gregTurn;
-        while(true){
+        while (true) {
 
             String AIorPlayer = scan.nextLine();
 
@@ -31,50 +32,42 @@ public class Main {
         }
 
 
-
-        if (steveGoesFirst()){
+        if (steveGoesFirst()) {
             goAgain = steveTurn.takeTurn();
             playerLastWent = "steve";
-        }
-        else{
+        } else {
             goAgain = gregTurn.takeTurn();
             playerLastWent = "greg";
         }
         int counter = 1;
         while (true) {
 
-            if (counter == boardSize * (boardSize+1)*2) /*game is complete*/{
+            if (counter == boardSize * (boardSize + 1) * 2) /*game is complete*/ {
                 //Initiate ENDGAME
                 String winningPlayer;
-                if (gameBoard.getScore("steve") > 0){
+                if (gameBoard.getScore("steve") > 0) {
                     winningPlayer = "steve";
-                }
-                else if (gameBoard.getScore("steve") < 0){
+                } else if (gameBoard.getScore("steve") < 0) {
                     winningPlayer = "greg";
-                }
-                else{
+                } else {
                     System.out.println("GAME OVER: It's a tie!");
                     break;
                 }
                 System.out.println("GAME OVER: " + winningPlayer + " WINS!");
                 break;
-            }
-            else if (goAgain){
+            } else if (goAgain) {
                 if (playerLastWent.equals("steve")) {
                     goAgain = steveTurn.takeTurn();
                     playerLastWent = "steve";
-                }
-                else{
+                } else {
                     goAgain = gregTurn.takeTurn();
                     playerLastWent = "greg";
                 }
-            }
-            else{
+            } else {
                 if (playerLastWent.equals("steve")) {
                     goAgain = gregTurn.takeTurn();
                     playerLastWent = "greg";
-                }
-                else{
+                } else {
                     goAgain = steveTurn.takeTurn();
                     playerLastWent = "steve";
                 }
@@ -84,7 +77,7 @@ public class Main {
 
     }
 
-    public static boolean steveGoesFirst(){
+    public static boolean steveGoesFirst() {
         Random rand = new Random();
         int goFirst = rand.nextInt(100) % 2;
         return (goFirst == 0);

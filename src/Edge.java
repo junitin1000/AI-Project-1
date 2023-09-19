@@ -16,7 +16,6 @@ public class Edge {
     }
 
 
-
     private void printEdge() {
         System.out.println("New Edge: (" + row1 + ", " + col1 + ") (" + row2 + ", " + col2 + ")");
     }

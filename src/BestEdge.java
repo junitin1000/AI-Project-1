@@ -3,7 +3,7 @@ public class BestEdge {
     Edge edge;
     int value;
 
-    public BestEdge(Edge theEdge, int theValue){
+    public BestEdge(Edge theEdge, int theValue) {
         edge = theEdge;
         value = theValue;
     }

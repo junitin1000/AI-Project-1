@@ -1,4 +1,4 @@
-public class Box implements Cloneable{
+public class Box implements Cloneable {
 
     boolean top;
     boolean bottom;
@@ -6,7 +6,7 @@ public class Box implements Cloneable{
     boolean right;
     String takenBy;
 
-    public Box(){
+    public Box() {
         top = false;
         bottom = false;
         left = false;
@@ -14,9 +14,9 @@ public class Box implements Cloneable{
         takenBy = "";
     }
 
-    public boolean checkComplete(String name, boolean realTurn){
+    public boolean checkComplete(String name, boolean realTurn) {
         boolean complete = false;
-        if (top && bottom && left && right){
+        if (top && bottom && left && right) {
             takenBy = name;
             complete = true;
             if (realTurn)
