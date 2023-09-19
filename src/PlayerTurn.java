@@ -34,7 +34,7 @@ public class PlayerTurn extends Turn{
 
     @Override
     public boolean takeTurn() {
-        System.out.println(name + "'s Turn!");
+        System.out.println("\n" + name + "'s Turn!");
         //Get response from Player "((r1,c1),(r2,c2))"
         boolean complete = false;
         boolean doItAgain = true;
