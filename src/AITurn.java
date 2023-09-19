@@ -1,5 +1,8 @@
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.nio.file.Files;
 
 public class AITurn extends Turn {
     int[] point1;
@@ -26,11 +29,12 @@ public class AITurn extends Turn {
     @Override
     public boolean takeTurn(){
         System.out.println(name + "'s Turn!");
+        System.getProperty("user.dir");
         Minimax minimax = new Minimax();
         double start = System.currentTimeMillis();
         Edge decision = minimax.bestMove(gameBoard, name);
         double finish = System.currentTimeMillis();
-        String moveToMake = name.toUpperCase()+ " " + decision.row1 + "," + decision.col1 + " " + decision.row2 + "," + decision.col2;
+        String moveToMake = name+ " " + decision.row1 + "," + decision.col1 + " " + decision.row2 + "," + decision.col2;
         System.out.println(moveToMake);
         System.out.println("Time Taken: " + (finish-start)/1000);
         int[] numbers = getNums(moveToMake);
@@ -39,9 +43,22 @@ public class AITurn extends Turn {
         int r2 = numbers[2];
         int c2 = numbers[3];
 
+        // Write the move to the move file
+        Path move_file = Paths.get(System.getProperty("user.dir") + "/src/move_file");
+        try {
+            System.out.println("Writing to move file");
+            Files.write(move_file, moveToMake.getBytes());
+            Thread.sleep(3000);
+        } catch (Exception e) {
+            System.out.println("Error writing to move file");
+        }
+
         //Update real board
         boolean complete = updateBoard(r1, c1, r2, c2, gameBoard, name, true);
+
         gameBoard.edges.remove(decision);
+
+
         return complete;
 
     }
