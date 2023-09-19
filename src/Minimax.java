@@ -38,8 +38,15 @@ public class Minimax {
      * alpha is the best maximizer currently guaranteed
      * beta is the best minimizer currently guaranteed
      */
-    public BestEdge minimaxAB(ArrayList<Edge> moves, Board board, Boolean isMaximizing, int depth, int alpha, int beta, String name){
+    public BestEdge minimaxAB(ArrayList<Edge> moves, Board board, Boolean isMaximizing, int depth, int alpha, int beta, String name, double startTime){
         Edge bestEdgeSoFar = null;
+
+        // Check to see if time limit is coming up
+        if ((System.currentTimeMillis() - startTime)/1000 > timeLimit){
+            return new BestEdge(bestEdgeSoFar, 999);
+        }
+
+        // check to see if at base case or out of edges
         if (depth == 0 || moves.size() == 0){
             return new BestEdge(bestEdgeSoFar, board.getScore(name));
         }
@@ -53,7 +60,7 @@ public class Minimax {
                 otherMoves.remove(move);
                 Board potentialBoard = board.deepCopy();
                 boolean completed = makeMove(move.row1, move.col1, move.row2, move.col2, potentialBoard, name);
-                int potentialMax = minimaxAB(otherMoves, potentialBoard, completed, depth-1, alpha, beta, name).getValue();
+                int potentialMax = minimaxAB(otherMoves, potentialBoard, completed, depth-1, alpha, beta, name, startTime).getValue();
                 if (potentialMax > max){
                     max = potentialMax;
                     bestEdgeSoFar = move;
@@ -72,7 +79,7 @@ public class Minimax {
                 otherMoves.remove(move);
                 Board potentialBoard = board.deepCopy();
                 boolean completed = makeMove(move.row1, move.col1, move.row2, move.col2, potentialBoard, "mind greg");
-                int potentialMin = minimaxAB(otherMoves, potentialBoard, !completed, depth-1, alpha, beta, name).getValue();
+                int potentialMin = minimaxAB(otherMoves, potentialBoard, !completed, depth-1, alpha, beta, name, startTime).getValue();
                 if (potentialMin < min){
                     min = potentialMin;
                     bestEdgeSoFar = move;
