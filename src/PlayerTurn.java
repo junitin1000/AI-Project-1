@@ -23,14 +23,18 @@ public class PlayerTurn extends Turn{
 
     Board gameBoard;
 
-    public PlayerTurn(/*HashMap<int[][], Integer> currentBoard,*/ Board theGameBoard, int sizeOfCurrentBoard, int whichPlayer){
+    String name;
+
+    public PlayerTurn(/*HashMap<int[][], Integer> currentBoard,*/ Board theGameBoard, int sizeOfCurrentBoard, String name){
         boardSize = sizeOfCurrentBoard;
         gameBoard = theGameBoard;
+        this.name = name;
 
     }
 
-    public boolean takeTurn(Integer whichPlayer) {
-        System.out.println("greg's Turn!");
+    @Override
+    public boolean takeTurn() {
+        System.out.println("\n" + name + "'s Turn!");
         //Get response from Player "((r1,c1),(r2,c2))"
         boolean complete = false;
         boolean doItAgain = true;
@@ -44,7 +48,6 @@ public class PlayerTurn extends Turn{
                             (edge.row1 == r2 && edge.col1 == c2 && edge.row2 == r1 && edge.col2 == c1)) {
                         gameBoard.edges.remove(edge);
                         validCheck = true;
-                        System.out.println("Removed Edge");
                         break;
                     }
                 }

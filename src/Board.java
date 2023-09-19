@@ -37,12 +37,12 @@ public class Board {
     }
 
 
-    public int getScore() {
+    public int getScore(String name) {
         int count = 0;
         for (int i = 0; i < Main.boardSize; i++) {
             for (int j = 0; j < Main.boardSize; j++) {
                 Box aBox = gameBoard[i][j];
-                if(aBox.takenBy.equals("steve")){
+                if(aBox.takenBy.equals(name)){
                     count++;
                 } else if (!aBox.takenBy.equals("")){
                     count--;
