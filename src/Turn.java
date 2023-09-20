@@ -79,5 +79,9 @@ public class Turn {
         return false;
     }
 
+    public boolean takeTurn(String response){
+        return false;
+    }
+
 
 }

@@ -1,16 +1,22 @@
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    static int boardSize = 3;
+    static int boardSize = 9;
+    static Path stevego = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/steve.go");
+    static Path stevepass = Paths.get(System.getProperty("user.dir") +"/src/dots_boxes_referee/steve.pass");
+    static Path endgame = Paths.get(System.getProperty("user.dir") +"/src/dots_boxes_referee/end_game");
+    static Path move_file = Paths.get(System.getProperty("user.dir") +"/src/dots_boxes_referee/move_file");
 
     public static void main(String[] args) {
-        //refMain();
-        nonRefMain();
+        refMain();
+        //nonRefMain();
 
     }
 
