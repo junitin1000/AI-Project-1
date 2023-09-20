@@ -27,8 +27,44 @@ public class Main {
         Board gameBoard = new Board();
         boolean goAgain;
         AITurn steveTurn = new AITurn(gameBoard, boardSize, "steve");
+        RefTurn opponentTurn = new RefTurn(gameBoard, boardSize, "greg");
+        /* in while loop */
+        // look for steve.go file
 
 
+        // condition: steve.pass file
+
+    }
+
+    public static boolean ourTurn(AITurn steveTurn, RefTurn opponentTurn, boolean goAgain, String playerLastWent) throws IOException {
+
+        if (Files.exists(endgame)) {
+            return false;  // game ended
+        } else {
+
+            List<String> moveList = Files.readAllLines(move_file);
+            String move = moveList.get(0);
+
+            if (!move.equals("") && !move.contains("0,0 0,0")) {  // if move is empty and not passing
+                // update edges and Board
+                opponentTurn.takeTurn(move);
+            }
+
+            // steve goes now
+            goAgain = steveTurn.takeTurn();
+            // add to movefile
+
+
+            if (goAgain && Files.exists(stevego)) {
+                if (playerLastWent.equals("steve")) {
+                    goAgain = steveTurn.takeTurn();
+                    playerLastWent = "steve";
+                }
+
+
+            }
+            return true;
+        }
     }
 
     public static boolean steveGoesFirst() {

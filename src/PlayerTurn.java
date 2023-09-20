@@ -7,10 +7,7 @@ import java.util.regex.Pattern;
 public class PlayerTurn extends Turn {
 
     //TODO NEED TO GO OVER HOW WE WANT TO HANDLE PARSING INFO GIVEN TO SELECT A LINE ON THE BOARD
-
     Scanner scan = new Scanner(System.in);
-    int[] point1;
-    int[] point2;
 
     int[] numbers;
     int r1;
@@ -19,10 +16,7 @@ public class PlayerTurn extends Turn {
     int c2;
 
     int boardSize;
-    //HashMap<int[][], Integer> gameBoard = new HashMap<>();
-
     Board gameBoard;
-
     String name;
 
     public PlayerTurn(/*HashMap<int[][], Integer> currentBoard,*/ Board theGameBoard, int sizeOfCurrentBoard, String name) {
