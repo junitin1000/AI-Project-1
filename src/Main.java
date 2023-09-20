@@ -1,3 +1,6 @@
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
@@ -6,6 +9,30 @@ public class Main {
     static int boardSize = 3;
 
     public static void main(String[] args) {
+        //refMain();
+        nonRefMain();
+
+    }
+
+    public static void refMain(){
+        Game game = new Game(boardSize, boardSize);
+        game.printBoard();
+        String playerLastWent;
+        Board gameBoard = new Board();
+        boolean goAgain;
+        AITurn steveTurn = new AITurn(gameBoard, boardSize, "steve");
+
+
+    }
+
+    public static boolean steveGoesFirst() {
+        Random rand = new Random();
+        int goFirst = rand.nextInt(100) % 2;
+        return (goFirst == 0);
+        //TODO integrate with referee later
+    }
+
+    public static void nonRefMain(){
         Scanner scan = new Scanner(System.in);
 
         Game game = new Game(boardSize, boardSize);
@@ -40,6 +67,7 @@ public class Main {
             playerLastWent = "greg";
         }
         int counter = 1;
+
         while (true) {
 
             if (counter == boardSize * (boardSize + 1) * 2) /*game is complete*/ {
@@ -74,13 +102,5 @@ public class Main {
             }
             counter++;
         }
-
-    }
-
-    public static boolean steveGoesFirst() {
-        Random rand = new Random();
-        int goFirst = rand.nextInt(100) % 2;
-        return (goFirst == 0);
-        //TODO integrate with referee later
     }
 }
