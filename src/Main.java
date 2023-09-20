@@ -22,10 +22,8 @@ public class Main {
 
     public static void refMain() throws InterruptedException, IOException {
         Game game = new Game(boardSize, boardSize);
-        game.printBoard();
-        String playerLastWent;
         Board gameBoard = new Board();
-        boolean goAgain;
+        boolean goAgain = false;
         AITurn steveTurn = new AITurn(gameBoard, boardSize, "steve");
         RefTurn opponentTurn = new RefTurn(gameBoard, boardSize, "greg");
         /* in while loop */
@@ -41,11 +39,7 @@ public class Main {
 
     }
 
-    public static boolean ourTurn(AITurn steveTurn, RefTurn opponentTurn, boolean goAgain, String playerLastWent) throws IOException {
-
-        if (Files.exists(endgame)) {
-            return false;  // game ended
-        } else {
+    public static boolean ourTurn(AITurn steveTurn, RefTurn opponentTurn) throws IOException {
 
         List<String> moveList = Files.readAllLines(move_file);
 
