@@ -12,6 +12,8 @@ public class Main {
     static Path stevego = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/steve.go");
     static Path stevepass = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/steve.pass");
     static Path endgame = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/end_game");
+    static Path greggo = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/greg.go");
+    static Path gregpass = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/greg.pass");
     static Path move_file = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/move_file");
 
     public static void main(String[] args) throws InterruptedException, IOException {

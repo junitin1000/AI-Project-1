@@ -51,7 +51,7 @@ public class AITurn extends Turn {
         // Write the move to the move file
         Path move_file = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/move_file");
         try {
-            System.out.println("Writing to move file");
+            //System.out.println("Writing to move file");
             Files.write(move_file, moveToMake.getBytes());
         } catch (Exception e) {
             System.out.println("Error writing to move file");
