@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PlayerTurn extends Turn{
+public class PlayerTurn extends Turn {
 
     //TODO NEED TO GO OVER HOW WE WANT TO HANDLE PARSING INFO GIVEN TO SELECT A LINE ON THE BOARD
 
@@ -25,7 +25,7 @@ public class PlayerTurn extends Turn{
 
     String name;
 
-    public PlayerTurn(/*HashMap<int[][], Integer> currentBoard,*/ Board theGameBoard, int sizeOfCurrentBoard, String name){
+    public PlayerTurn(/*HashMap<int[][], Integer> currentBoard,*/ Board theGameBoard, int sizeOfCurrentBoard, String name) {
         boardSize = sizeOfCurrentBoard;
         gameBoard = theGameBoard;
         this.name = name;
@@ -34,7 +34,7 @@ public class PlayerTurn extends Turn{
 
     @Override
     public boolean takeTurn() {
-        System.out.println(name + "'s Turn!");
+        System.out.println("\n" + name + "'s Turn!");
         //Get response from Player "((r1,c1),(r2,c2))"
         boolean complete = false;
         boolean doItAgain = true;
@@ -53,8 +53,7 @@ public class PlayerTurn extends Turn{
                 }
                 if (!validCheck) {
                     System.out.println("Invalid Edge. Try Again");
-                }
-                else
+                } else
                     doItAgain = false;
 
             } else {
@@ -65,7 +64,7 @@ public class PlayerTurn extends Turn{
         return complete;
     }
 
-    private int[] getNums(String num){
+    private int[] getNums(String num) {
         Pattern numberPattern = Pattern.compile("-?\\d+");
         Matcher matcher = numberPattern.matcher(num);
         int[] numbers = new int[4];
@@ -89,7 +88,7 @@ public class PlayerTurn extends Turn{
      * @param response - a user input from the command line
      * @return true if the above conditions are satisfied, false otherwise
      */
-    private boolean isValidResponse(String response){
+    private boolean isValidResponse(String response) {
         //String pattern = "\\(\\(-?\\d+,\\d+\\),\\(-?\\d+,\\d+\\)\\)"; //The pattern '((X1,Y1),(X2,Y2))'
         //Pattern regex = Pattern.compile(pattern);
         //Matcher matcher = regex.matcher(workingResp);
@@ -100,24 +99,23 @@ public class PlayerTurn extends Turn{
         r2 = numbers[2];
         c2 = numbers[3];
 
-            boolean inRange = true;
+        boolean inRange = true;
 
-            for (int eachNumber : numbers){
-                if (eachNumber > boardSize || eachNumber < 0){
-                    inRange = false;
-                    break;
-                }
+        for (int eachNumber : numbers) {
+            if (eachNumber > boardSize || eachNumber < 0) {
+                inRange = false;
+                break;
             }
+        }
 
-            if (inRange){
-                    //If the current line has not already been drawn
-                    //point1 = new int[]{r1, c1};
-                    //point2 = new int[]{r2, c2};
-                    //if (!gameBoard.containsKey(new int[][]{point1, point2})){
-                        return true;
-                    //
-                }
-
+        if (inRange) {
+            //If the current line has not already been drawn
+            //point1 = new int[]{r1, c1};
+            //point2 = new int[]{r2, c2};
+            //if (!gameBoard.containsKey(new int[][]{point1, point2})){
+            return true;
+            //
+        }
 
 
         //}

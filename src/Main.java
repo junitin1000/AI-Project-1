@@ -6,9 +6,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    static int boardSize = 2;
-    public static void main(String[] args) throws InterruptedException {
+    static int boardSize = 3;
 
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
 
         Game game = new Game(boardSize, boardSize);
         game.printBoard();
@@ -16,18 +17,31 @@ public class Main {
         Board gameBoard = new Board();
         boolean goAgain;
         AITurn steveTurn = new AITurn(gameBoard, boardSize, "steve");
-        System.out.println("Do you want to play with AI vs. AI or Player vs. AI?");
-        Scanner scan = new Scanner(System.in);
-        String AIorPlayer = scan.nextLine();
+        System.out.println("Do you want to play with AI vs. AI or Player vs. AI? (AI = 1, Player = 2)");
         Turn gregTurn;
+        while (true) {
 
-        if (AIorPlayer.equals("AI")){
-            gregTurn = new AITurn(gameBoard, boardSize, "greg");
-        }
-        else {
-            gregTurn = new PlayerTurn(gameBoard, boardSize, "greg");
+            String AIorPlayer = scan.nextLine();
+
+            if (AIorPlayer.equals("1")) {
+                gregTurn = new AITurn(gameBoard, boardSize, "greg");
+                break;
+            } else if (AIorPlayer.equals("2")) {
+                gregTurn = new PlayerTurn(gameBoard, boardSize, "greg");
+                break;
+            } else {
+                System.out.println("Sorry, I didn't get that.");
+            }
         }
 
+
+        if (steveGoesFirst()) {
+            goAgain = steveTurn.takeTurn();
+            playerLastWent = "steve";
+        } else {
+            goAgain = gregTurn.takeTurn();
+            playerLastWent = "greg";
+        }
         int counter = 1;
         Path stevego = Paths.get(System.getProperty("user.dir") + "/src/steve.go");
         Path stevepass = Paths.get(System.getProperty("user.dir") +"/src/steve.pass");
@@ -35,52 +49,43 @@ public class Main {
         Path move_file = Paths.get(System.getProperty("user.dir") +"/src/move_file");
         System.out.println(stevego);
         while (true) {
-            // check if the stevego file is in the directory and the moves file is empty
-            System.out.println(Files.exists(stevego));
-            if(!Files.exists(move_file)) {
-                System.out.println("Waiting for game to start");
-                continue;
-            } else if(Files.exists(stevego)) {
-                System.out.println("Steve's turn to go");
-            } else if (Files.exists(stevepass)) {
-                System.out.println("Other player's turn to go. Steve passed");
-            } else if (Files.exists(endgame)) {
-                System.out.println("Game over");
-                break;
-            } else {
-                System.out.println("Waiting for other player to go");
-                Thread.sleep(1000);
-                continue;
-            }
 
-            // If the game is over announce the winner
-            if (counter == boardSize * (boardSize+1)*2) /*game is complete*/{
+            if (counter == boardSize * (boardSize + 1) * 2) /*game is complete*/ {
                 //Initiate ENDGAME
                 String winningPlayer;
-                if (gameBoard.getScore("steve") > 0){
+                if (gameBoard.getScore("steve") > 0) {
                     winningPlayer = "steve";
-                }
-                else if (gameBoard.getScore("steve") < 0){
+                } else if (gameBoard.getScore("steve") < 0) {
                     winningPlayer = "greg";
-                }
-                else{
+                } else {
                     System.out.println("GAME OVER: It's a tie!");
                     break;
                 }
-                System.out.println("GAME OVER: " + " WINS!");
+                System.out.println("GAME OVER: " + winningPlayer + " WINS!");
                 break;
-            }
-            // Otherwise take steve's turn
-            else{
-                goAgain = steveTurn.takeTurn();
-                playerLastWent = "steve";
+            } else if (goAgain) {
+                if (playerLastWent.equals("steve")) {
+                    goAgain = steveTurn.takeTurn();
+                    playerLastWent = "steve";
+                } else {
+                    goAgain = gregTurn.takeTurn();
+                    playerLastWent = "greg";
+                }
+            } else {
+                if (playerLastWent.equals("steve")) {
+                    goAgain = gregTurn.takeTurn();
+                    playerLastWent = "greg";
+                } else {
+                    goAgain = steveTurn.takeTurn();
+                    playerLastWent = "steve";
+                }
             }
             counter++;
         }
 
     }
 
-    public static boolean steveGoesFirst(){
+    public static boolean steveGoesFirst() {
         Random rand = new Random();
         int goFirst = rand.nextInt(100) % 2;
         return (goFirst == 0);
