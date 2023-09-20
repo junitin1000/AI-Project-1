@@ -147,7 +147,7 @@ def gameplay():
         points = getPoints(move, player)
 
         if points == -1:
-            endmsg = "Game ended, invalid move: " + move + ", " + str(player *-1) + "wins"
+            endmsg = "Game ended, invalid move" + str(player *-1) + "wins"
         if points == 0:
             player = changeTurn()
         if points == 1 or points == 2:
