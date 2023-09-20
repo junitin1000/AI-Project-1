@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Minimax {
 
     int max_depth = 10;
-    public double timeLimit = 9.2;
+    public double timeLimit = 1.8;
 
     /**
      * Returns the best move given a certain board state

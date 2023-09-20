@@ -21,25 +21,34 @@ public class Main {
     }
 
     public static void refMain() throws InterruptedException, IOException {
-        Game game = new Game(boardSize, boardSize);
-        Board gameBoard = new Board();
-        boolean goAgain = false;
-        AITurn steveTurn = new AITurn(gameBoard, boardSize, "steve");
-        RefTurn opponentTurn = new RefTurn(gameBoard, boardSize, "greg");
+        Board gameBoardSteve = new Board();
+        Board gameBoardGreg = new Board();
+        AITurn steveTurn = new AITurn(gameBoardSteve, boardSize, "steve");
+        AITurn gregTurn = new AITurn(gameBoardGreg, boardSize, "greg");
+        RefTurn stevesOpponentTurn = new RefTurn(gameBoardSteve, boardSize, "steveOppDude");
+        RefTurn gregsOpponentTurn = new RefTurn(gameBoardGreg, boardSize, "gregOppDude");
         /* in while loop */
         while (!Files.exists(endgame)) {
             //sense steve.go
             if (Files.exists(stevego)) {
-                ourTurn(steveTurn, opponentTurn);
+                ourTurn(steveTurn, stevesOpponentTurn);
             } else if (Files.exists(stevepass)) {
-                ourPass(opponentTurn);
+                ourPass(stevesOpponentTurn, "steve");
             }
+
+            //sense greg.go
+            if (Files.exists(greggo)) {
+                ourTurn(gregTurn, gregsOpponentTurn);
+            } else if (Files.exists(gregpass)) {
+                ourPass(gregsOpponentTurn, "greg");
+            }
+
             Thread.sleep(100);
         }
 
     }
 
-    public static boolean ourTurn(AITurn steveTurn, RefTurn opponentTurn) throws IOException {
+    public static boolean ourTurn(AITurn myTurn, RefTurn opponentTurn) throws IOException {
 
         List<String> moveList = Files.readAllLines(move_file);
 
@@ -56,12 +65,12 @@ public class Main {
         }
 
         // steve goes now and writes his turn to move file
-        steveTurn.takeTurn();
+        myTurn.takeTurn();
 
         return true;
     }
 
-    public static void ourPass(RefTurn opponentTurn) throws IOException {
+    public static void ourPass(RefTurn opponentTurn, String name) throws IOException {
         List<String> moveList = Files.readAllLines(move_file);
 
         if(!moveList.isEmpty()){
@@ -76,7 +85,8 @@ public class Main {
         // acknowledge move by writing 0,0 0,0
         try {
             System.out.println("Writing to move file");
-            Files.write(move_file, "steve 0,0 0,0".getBytes());
+            String passMove = name + " 0,0 0,0";
+            Files.write(move_file, passMove.getBytes());
         } catch (Exception e) {
             System.out.println("Error writing to move file");
         }

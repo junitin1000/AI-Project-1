@@ -9,9 +9,7 @@ public class RefTurn extends Turn{
     int c2;
 
     int boardSize;
-
     Board gameBoard;
-
     String name;
 
     public RefTurn(Board theGameBoard, int sizeOfCurrentBoard, String name) {
