@@ -10,17 +10,17 @@ import java.util.Scanner;
 public class Main {
     static int boardSize = 9;
     static Path stevego = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/steve.go");
-    static Path stevepass = Paths.get(System.getProperty("user.dir") +"/src/dots_boxes_referee/steve.pass");
-    static Path endgame = Paths.get(System.getProperty("user.dir") +"/src/dots_boxes_referee/end_game");
-    static Path move_file = Paths.get(System.getProperty("user.dir") +"/src/dots_boxes_referee/move_file");
+    static Path stevepass = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/steve.pass");
+    static Path endgame = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/end_game");
+    static Path move_file = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/move_file");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, IOException {
         refMain();
         //nonRefMain();
 
     }
 
-    public static void refMain(){
+    public static void refMain() throws InterruptedException, IOException {
         Game game = new Game(boardSize, boardSize);
         game.printBoard();
         String playerLastWent;
@@ -29,10 +29,15 @@ public class Main {
         AITurn steveTurn = new AITurn(gameBoard, boardSize, "steve");
         RefTurn opponentTurn = new RefTurn(gameBoard, boardSize, "greg");
         /* in while loop */
-        // look for steve.go file
-
-
-        // condition: steve.pass file
+        while (!Files.exists(endgame)) {
+            //sense steve.go
+            if (Files.exists(stevego)) {
+                ourTurn(steveTurn, opponentTurn);
+            } else if (Files.exists(stevepass)) {
+                ourPass(opponentTurn);
+            }
+            Thread.sleep(100);
+        }
 
     }
 
@@ -42,30 +47,48 @@ public class Main {
             return false;  // game ended
         } else {
 
-            List<String> moveList = Files.readAllLines(move_file);
+        List<String> moveList = Files.readAllLines(move_file);
+
+        if(!moveList.isEmpty()) {
             String move = moveList.get(0);
 
+            if(move != null){  // if move is empty and not passing
+                if(!move.contains("0,0 0,0")){
+                    // update edges and Board
+                    opponentTurn.takeTurn(move);
+                    System.out.println(move);
+                }
+            }
+        }
+
+        // steve goes now and writes his turn to move file
+        steveTurn.takeTurn();
+
+        return true;
+    }
+
+    public static void ourPass(RefTurn opponentTurn) throws IOException {
+        List<String> moveList = Files.readAllLines(move_file);
+
+        if(!moveList.isEmpty()){
+            String move = moveList.get(0);
+            // read their move and add to our board
             if (!move.equals("") && !move.contains("0,0 0,0")) {  // if move is empty and not passing
                 // update edges and Board
                 opponentTurn.takeTurn(move);
             }
-
-            // steve goes now
-            goAgain = steveTurn.takeTurn();
-            // add to movefile
-
-
-            if (goAgain && Files.exists(stevego)) {
-                if (playerLastWent.equals("steve")) {
-                    goAgain = steveTurn.takeTurn();
-                    playerLastWent = "steve";
-                }
-
-
-            }
-            return true;
         }
+
+        // acknowledge move by writing 0,0 0,0
+        try {
+            System.out.println("Writing to move file");
+            Files.write(move_file, "steve 0,0 0,0".getBytes());
+        } catch (Exception e) {
+            System.out.println("Error writing to move file");
+        }
+
     }
+
 
     public static boolean steveGoesFirst() {
         Random rand = new Random();
@@ -74,7 +97,7 @@ public class Main {
         //TODO integrate with referee later
     }
 
-    public static void nonRefMain(){
+    public static void nonRefMain() {
         Scanner scan = new Scanner(System.in);
 
         Game game = new Game(boardSize, boardSize);

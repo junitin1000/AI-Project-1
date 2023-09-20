@@ -53,7 +53,6 @@ public class AITurn extends Turn {
         try {
             System.out.println("Writing to move file");
             Files.write(move_file, moveToMake.getBytes());
-            Thread.sleep(3000);
         } catch (Exception e) {
             System.out.println("Error writing to move file");
         }
