@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +47,17 @@ public class AITurn extends Turn {
         //Update real board
         boolean complete = updateBoard(r1, c1, r2, c2, gameBoard, name, true);
         gameBoard.edges.remove(decision);
+
+        // Write the move to the move file
+        Path move_file = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/move_file");
+        try {
+            System.out.println("Writing to move file");
+            Files.write(move_file, moveToMake.getBytes());
+            Thread.sleep(3000);
+        } catch (Exception e) {
+            System.out.println("Error writing to move file");
+        }
+
         return complete;
 
     }
