@@ -29,20 +29,27 @@ public class Main {
         AITurn gregTurn = new AITurn(gameBoardGreg, boardSize, "greg");
         RefTurn stevesOpponentTurn = new RefTurn(gameBoardSteve, boardSize, "steveOppDude");
         RefTurn gregsOpponentTurn = new RefTurn(gameBoardGreg, boardSize, "gregOppDude");
+        boolean stevesTurn = false;
+        String playerLastWent = "";
+
         /* in while loop */
         while (!Files.exists(endgame)) {
-            //sense steve.go
-            if (Files.exists(stevego)) {
-                ourTurn(steveTurn, stevesOpponentTurn);
-            } else if (Files.exists(stevepass)) {
+            //sense steve.go and its steves turn
+            if (Files.exists(stevego) && stevesTurn) {
+                stevesTurn = ourTurn(steveTurn, stevesOpponentTurn);
+                playerLastWent = "steve";
+            } else if (Files.exists(stevepass) && stevesTurn) {
                 ourPass(stevesOpponentTurn, "steve");
+                playerLastWent = "steve";
             }
 
             //sense greg.go
             if (Files.exists(greggo)) {
                 ourTurn(gregTurn, gregsOpponentTurn);
+                playerLastWent = "greg";
             } else if (Files.exists(gregpass)) {
                 ourPass(gregsOpponentTurn, "greg");
+                playerLastWent = "greg";
             }
 
             Thread.sleep(100);
@@ -67,9 +74,9 @@ public class Main {
         }
 
         // steve goes now and writes his turn to move file
-        myTurn.takeTurn();
 
-        return true;
+
+        return myTurn.takeTurn();
     }
 
     public static void ourPass(RefTurn opponentTurn, String name) throws IOException {
