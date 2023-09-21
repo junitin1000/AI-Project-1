@@ -18,11 +18,64 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         refMain();
+        //refMainNonAI();
         //nonRefMain();
 
     }
 
+    public static void refMainNonAI() throws InterruptedException, IOException {
+        Board gameBoard = new Board();
+        AITurn steveTurn = new AITurn(gameBoard, boardSize, "steve");
+        RefTurn gregTurn = new RefTurn(gameBoard, boardSize, "greg");
+
+        /* in while loop */
+        while (!Files.exists(endgame)) {
+            //sense steve.go
+            if (Files.exists(stevego)) {
+                ourTurn(steveTurn, gregTurn);
+            } else if (Files.exists(stevepass)) {
+                ourPass(gregTurn, "steve");
+            }
+            Thread.sleep(100);
+        }
+
+    }
+
     public static void refMain() throws InterruptedException, IOException {
+        Board gameBoardSteve = new Board();
+        Board gameBoardGreg = new Board();
+        AITurn steveTurn = new AITurn(gameBoardSteve, boardSize, "steve");
+        AITurn gregTurn = new AITurn(gameBoardGreg, boardSize, "greg");
+        RefTurn stevesOpponentTurn = new RefTurn(gameBoardSteve, boardSize, "steveOppDude");
+        RefTurn gregsOpponentTurn = new RefTurn(gameBoardGreg, boardSize, "gregOppDude");
+
+        /* in while loop */
+        while (!Files.exists(endgame)) {
+            //sense steve.go
+            if (Files.exists(stevego)) {
+                ourTurn(steveTurn, stevesOpponentTurn);
+            } else if (Files.exists(stevepass)) {
+                ourPass(stevesOpponentTurn, "steve");
+            }
+
+            Thread.sleep(100);
+
+            //sense greg.go
+            if (Files.exists(greggo)) {
+                ourTurn(gregTurn, gregsOpponentTurn);
+            } else if (Files.exists(gregpass)) {
+                ourPass(gregsOpponentTurn, "greg");
+            }
+
+            Thread.sleep(100);
+        }
+        System.out.println("yurrrrr");
+        System.out.println("End Game!");
+
+    }
+
+
+    public static void refMainNick() throws InterruptedException, IOException {
         Board gameBoardSteve = new Board();
         Board gameBoardGreg = new Board();
         AITurn steveTurn = new AITurn(gameBoardSteve, boardSize, "steve");
@@ -43,6 +96,8 @@ public class Main {
                 playerLastWent = "steve";
             }
 
+            Thread.sleep(100);
+
             //sense greg.go
             if (Files.exists(greggo)) {
                 ourTurn(gregTurn, gregsOpponentTurn);
@@ -54,6 +109,8 @@ public class Main {
 
             Thread.sleep(100);
         }
+        System.out.println("yurrrrr");
+        System.out.println("End Game!");
 
     }
 
@@ -114,6 +171,7 @@ public class Main {
         Scanner scan = new Scanner(System.in);
 
         Game game = new Game(boardSize, boardSize);
+
         game.printBoard();
         String playerLastWent;
         Board gameBoard = new Board();

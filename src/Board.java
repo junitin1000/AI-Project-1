@@ -3,6 +3,7 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Board {
 
@@ -27,13 +28,16 @@ public class Board {
     }
 
     public void initializeEdges() {
-        edges = new ArrayList<Edge>();
+        ArrayList<Edge> loedges = new ArrayList<Edge>();
         for (int i = 0; i <= Main.boardSize; i++) {
             for (int j = 0; j < Main.boardSize; j++) {
-                edges.add(new Edge(i, j, i, j + 1)); // horizontal edges
-                edges.add(new Edge(j, i, j + 1, i)); // vertical edges
+                loedges.add(new Edge(i, j, i, j + 1)); // horizontal edges
+                loedges.add(new Edge(j, i, j + 1, i)); // vertical edges
             }
         }
+        Collections.shuffle(loedges);
+        edges = loedges;
+
     }
 
 
