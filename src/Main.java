@@ -60,6 +60,10 @@ public class Main {
 
             Thread.sleep(100);
 
+            if (Files.exists(endgame)){
+                break;
+            }
+
             //sense greg.go
             if (Files.exists(greggo)) {
                 ourTurn(gregTurn, gregsOpponentTurn);
@@ -69,8 +73,8 @@ public class Main {
 
             Thread.sleep(100);
         }
-        System.out.println("yurrrrr");
         System.out.println("End Game!");
+        System.out.println("steve scored " + gameBoardSteve.getScore("steve"));
 
     }
 
