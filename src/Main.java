@@ -78,46 +78,6 @@ public class Main {
 
     }
 
-
-    public static void refMainNick() throws InterruptedException, IOException {
-        Board gameBoardSteve = new Board();
-        Board gameBoardGreg = new Board();
-        AITurn steveTurn = new AITurn(gameBoardSteve, boardSize, "steve");
-        AITurn gregTurn = new AITurn(gameBoardGreg, boardSize, "greg");
-        RefTurn stevesOpponentTurn = new RefTurn(gameBoardSteve, boardSize, "steveOppDude");
-        RefTurn gregsOpponentTurn = new RefTurn(gameBoardGreg, boardSize, "gregOppDude");
-        boolean stevesTurn = false;
-        String playerLastWent = "";
-
-        /* in while loop */
-        while (!Files.exists(endgame)) {
-            //sense steve.go and its steves turn
-            if (Files.exists(stevego) && stevesTurn) {
-                stevesTurn = ourTurn(steveTurn, stevesOpponentTurn);
-                playerLastWent = "steve";
-            } else if (Files.exists(stevepass) && stevesTurn) {
-                ourPass(stevesOpponentTurn, "steve");
-                playerLastWent = "steve";
-            }
-
-            Thread.sleep(100);
-
-            //sense greg.go
-            if (Files.exists(greggo)) {
-                ourTurn(gregTurn, gregsOpponentTurn);
-                playerLastWent = "greg";
-            } else if (Files.exists(gregpass)) {
-                ourPass(gregsOpponentTurn, "greg");
-                playerLastWent = "greg";
-            }
-
-            Thread.sleep(100);
-        }
-        System.out.println("yurrrrr");
-        System.out.println("End Game!");
-
-    }
-
     public static boolean ourTurn(AITurn myTurn, RefTurn opponentTurn) throws IOException {
 
         List<String> moveList = Files.readAllLines(move_file);
