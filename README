@@ -1,0 +1,6 @@
+Setup
+1. Install jre 1.8
+2. Download the steve.jar file
+3. Place the steve.jar file inside of the referee directory
+4. Run steve.jar using: java -jar steve.jar
+5. Run the referee
