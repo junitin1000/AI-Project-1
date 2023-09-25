@@ -17,8 +17,8 @@ public class Main {
     static Path move_file = Paths.get(System.getProperty("user.dir") + "/move_file");
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        refMain();
-        // refMainNonAI();
+        // refMain();
+        refMainNonAI();
         // nonRefMain();
 
     }
