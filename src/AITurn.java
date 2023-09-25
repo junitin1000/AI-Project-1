@@ -9,20 +9,20 @@ public class AITurn extends Turn {
     int[] point1;
     int[] point2;
 
-//    int[] numbers;
-//    int r1;
-//    int c1;
-//    int r2;
-//    int c2;
+    // int[] numbers;
+    // int r1;
+    // int c1;
+    // int r2;
+    // int c2;
 
     int boardSize;
-    //HashMap<int[][], Integer> gameBoard = new HashMap<>();
+    // HashMap<int[][], Integer> gameBoard = new HashMap<>();
 
     Board gameBoard;
     String name;
 
-
-    public AITurn(/*HashMap<int[][], Integer> currentBoard,*/ Board theGameBoard, int sizeOfCurrentBoard, String name) {
+    public AITurn(/* HashMap<int[][], Integer> currentBoard, */ Board theGameBoard, int sizeOfCurrentBoard,
+            String name) {
         boardSize = sizeOfCurrentBoard;
         gameBoard = theGameBoard;
         this.name = name;
@@ -37,25 +37,25 @@ public class AITurn extends Turn {
         double finish = System.currentTimeMillis();
         String moveToMake = "";
         boolean complete = false;
-        //if (decision != null) {
-            moveToMake = name + " " + decision.row1 + "," + decision.col1 + " " + decision.row2 + "," + decision.col2;
+        // if (decision != null) {
+        moveToMake = name + " " + decision.row1 + "," + decision.col1 + " " + decision.row2 + "," + decision.col2;
 
-            System.out.println("\tTime Taken: " + (finish - start) / 1000);
-            System.out.println(moveToMake.toUpperCase());
-            int[] numbers = getNums(moveToMake);
-            int r1 = numbers[0];
-            int c1 = numbers[1];
-            int r2 = numbers[2];
-            int c2 = numbers[3];
+        System.out.println("\tTime Taken: " + (finish - start) / 1000);
+        System.out.println(moveToMake.toUpperCase());
+        int[] numbers = getNums(moveToMake);
+        int r1 = numbers[0];
+        int c1 = numbers[1];
+        int r2 = numbers[2];
+        int c2 = numbers[3];
 
-            //Update real board
-            complete = updateBoard(r1, c1, r2, c2, gameBoard, name, true);
-            gameBoard.edges.remove(decision);
-        //}
+        // Update real board
+        complete = updateBoard(r1, c1, r2, c2, gameBoard, name, true);
+        gameBoard.edges.remove(decision);
+        // }
         // Write the move to the move file
-        Path move_file = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/move_file");
+        Path move_file = Paths.get(System.getProperty("user.dir") + "/move_file");
         try {
-            //System.out.println("Writing to move file");
+            // System.out.println("Writing to move file");
             Files.write(move_file, moveToMake.getBytes());
         } catch (Exception e) {
             System.out.println("Error writing to move file");
@@ -64,7 +64,6 @@ public class AITurn extends Turn {
         return complete;
 
     }
-
 
     private int[] getNums(String num) {
         Pattern numberPattern = Pattern.compile("-?\\d+");
@@ -78,6 +77,5 @@ public class AITurn extends Turn {
 
         return numbers;
     }
-
 
 }

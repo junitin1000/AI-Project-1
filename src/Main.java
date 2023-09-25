@@ -9,17 +9,17 @@ import java.util.Scanner;
 
 public class Main {
     static int boardSize = 9;
-    static Path stevego = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/steve.go");
-    static Path stevepass = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/steve.pass");
-    static Path endgame = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/end_game");
-    static Path greggo = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/greg.go");
-    static Path gregpass = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/greg.pass");
-    static Path move_file = Paths.get(System.getProperty("user.dir") + "/src/dots_boxes_referee/move_file");
+    static Path stevego = Paths.get(System.getProperty("user.dir") + "/steve.go");
+    static Path stevepass = Paths.get(System.getProperty("user.dir") + "/steve.pass");
+    static Path endgame = Paths.get(System.getProperty("user.dir") + "/end_game");
+    static Path greggo = Paths.get(System.getProperty("user.dir") + "/greg.go");
+    static Path gregpass = Paths.get(System.getProperty("user.dir") + "/greg.pass");
+    static Path move_file = Paths.get(System.getProperty("user.dir") + "/move_file");
 
     public static void main(String[] args) throws InterruptedException, IOException {
         refMain();
-        //refMainNonAI();
-        //nonRefMain();
+        // refMainNonAI();
+        // nonRefMain();
 
     }
 
@@ -30,7 +30,7 @@ public class Main {
 
         /* in while loop */
         while (!Files.exists(endgame)) {
-            //sense steve.go
+            // sense steve.go
             if (Files.exists(stevego)) {
                 ourTurn(steveTurn, gregTurn);
             } else if (Files.exists(stevepass)) {
@@ -51,7 +51,7 @@ public class Main {
 
         /* in while loop */
         while (!Files.exists(endgame)) {
-            //sense steve.go
+            // sense steve.go
             if (Files.exists(stevego)) {
                 ourTurn(steveTurn, stevesOpponentTurn);
             } else if (Files.exists(stevepass)) {
@@ -60,11 +60,11 @@ public class Main {
 
             Thread.sleep(100);
 
-            if (Files.exists(endgame)){
+            if (Files.exists(endgame)) {
                 break;
             }
 
-            //sense greg.go
+            // sense greg.go
             if (Files.exists(greggo)) {
                 ourTurn(gregTurn, gregsOpponentTurn);
             } else if (Files.exists(gregpass)) {
@@ -82,11 +82,11 @@ public class Main {
 
         List<String> moveList = Files.readAllLines(move_file);
 
-        if(!moveList.isEmpty()) {
+        if (!moveList.isEmpty()) {
             String move = moveList.get(0);
 
-            if(move != null){  // if move is empty and not passing
-                if(!move.contains("0,0 0,0")){
+            if (move != null) { // if move is empty and not passing
+                if (!move.contains("0,0 0,0")) {
                     // update edges and Board
                     opponentTurn.takeTurn(move);
                     System.out.println(move);
@@ -96,17 +96,16 @@ public class Main {
 
         // steve goes now and writes his turn to move file
 
-
         return myTurn.takeTurn();
     }
 
     public static void ourPass(RefTurn opponentTurn, String name) throws IOException {
         List<String> moveList = Files.readAllLines(move_file);
 
-        if(!moveList.isEmpty()){
+        if (!moveList.isEmpty()) {
             String move = moveList.get(0);
             // read their move and add to our board
-            if (!move.equals("") && !move.contains("0,0 0,0")) {  // if move is empty and not passing
+            if (!move.equals("") && !move.contains("0,0 0,0")) { // if move is empty and not passing
                 // update edges and Board
                 opponentTurn.takeTurn(move);
             }
@@ -123,12 +122,11 @@ public class Main {
 
     }
 
-
     public static boolean steveGoesFirst() {
         Random rand = new Random();
         int goFirst = rand.nextInt(100) % 2;
         return (goFirst == 0);
-        //TODO integrate with referee later
+        // TODO integrate with referee later
     }
 
     public static void nonRefMain() {
@@ -158,7 +156,6 @@ public class Main {
             }
         }
 
-
         if (steveGoesFirst()) {
             goAgain = steveTurn.takeTurn();
             playerLastWent = "steve";
@@ -170,8 +167,8 @@ public class Main {
 
         while (true) {
 
-            if (counter == boardSize * (boardSize + 1) * 2) /*game is complete*/ {
-                //Initiate ENDGAME
+            if (counter == boardSize * (boardSize + 1) * 2) /* game is complete */ {
+                // Initiate ENDGAME
                 String winningPlayer;
                 if (gameBoard.getScore("steve") > 0) {
                     winningPlayer = "steve";
