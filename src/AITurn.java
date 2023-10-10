@@ -65,7 +65,7 @@ public class AITurn extends Turn {
     }
 
     private int[] getNums(String num) {
-        Pattern numberPattern = Pattern.compile("[\\\\s,](\\\\d+)");
+        Pattern numberPattern = Pattern.compile("-?\\d+");
         Matcher matcher = numberPattern.matcher(num);
         int[] numbers = new int[4];
         int index = 0;
